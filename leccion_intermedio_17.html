@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lección 17: Viajando - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .option-btn.correct { background-color: #A7F3D0; border-color: #10B981; }
+        .option-btn.incorrect { background-color: #FECACA; border-color: #EF4444; }
+        .feedback-enter { animation: fadeIn 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between">
+                <a href="lecciones_intermedio.html" class="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mx-4">
+                    <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                 <a href="progreso.html" class="text-gray-500 hover:text-gray-800">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9a9.75 9.75 0 011.316-5.342 9.75 9.75 0 0113.634 1.316 9.75 9.75 0 01-5.342 13.634 9.75 9.75 0 01-1.316 5.342zM16.5 18.75a9.75 9.75 0 005.342-13.634m0 13.634a9.75 9.75 0 01-13.634-5.342m5.342 13.634a9.75 9.75 0 01-5.342-1.316M3.75 5.25a9.75 9.75 0 015.342-1.316m-5.342 1.316a9.75 9.75 0 011.316 5.342m-1.316-5.342a9.75 9.75 0 0113.634 5.342" /></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="lesson-container">
+                <!-- El contenido de la lección se cargará aquí -->
+            </div>
+            <div class="mt-8 flex justify-between">
+                <button id="prev-button" class="bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50" disabled>Anterior</button>
+                <button id="next-button" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition-colors">Siguiente</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lessonId = "lesson-17";
+            let lessonScore = 0;
+            let currentCardIndex = 0;
+
+            const baseLessonData = [
+                 {
+                    type: 'introduction',
+                    title: 'Viajando por el Tawantinsuyu: Rutas y Destinos',
+                    text: '¡Prepara tu equipaje! En esta lección aprenderás a hablar sobre viajes. Descubrirás verbos y sustantivos clave para preguntar por destinos, hablar de cómo llegar y describir el camino.',
+                    image: 'imagenes/lecciones/intermedio/leccion_17/imagen_1.jpg'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Riy',
+                    spanish: 'Ir',
+                    image: 'imagenes/lecciones/intermedio/leccion_17/imagen_2.jpg',
+                    explanation: 'El verbo <span class="font-bold text-teal-600">riy</span> es fundamental y significa "ir" a un lugar.'
+                },
+                {
+                    type: 'dialogue',
+                    title: 'Diálogo 1: ¿A dónde vas?',
+                    conversation: [
+                        { speaker: 'Wayra', text: '¿Maytan rinki?', translation: '¿A dónde vas?' },
+                        { speaker: 'Kusi', text: 'Cusco llaqtatan rini.', translation: 'Voy a la ciudad de Cusco.' }
+                    ]
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Chayay',
+                    spanish: 'Llegar',
+                    image: 'imagenes/lecciones/intermedio/leccion_17/imagen_3.jpg',
+                    explanation: '<span class="font-bold text-teal-600">Chayay</span> es el verbo que se usa para indicar la llegada a un destino.'
+                },
+                 {
+                    type: 'dialogue',
+                    title: 'Diálogo 2: La llegada',
+                    conversation: [
+                        { speaker: 'Kusi', text: '¿Hayk\'aqmi chayanki?', translation: '¿Cuándo llegas?' },
+                        { speaker: 'Wayra', text: 'Paqarinmi chayasaq.', translation: 'Llegaré mañana.' }
+                    ]
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Puriy',
+                    spanish: 'Caminar / Viajar / Pasear',
+                    image: 'imagenes/lecciones/intermedio/leccion_17/imagen_4.jpg',
+                    explanation: '<span class="font-bold text-teal-600">Puriy</span> es un verbo muy versátil que puede significar caminar, pasear o viajar en un sentido más general.'
+                },
+                 {
+                    type: 'dialogue',
+                    title: 'Diálogo 3: Un paseo por el campo',
+                    conversation: [
+                        { speaker: 'Wayra', text: '¿Maytan purishanki?', translation: '¿A dónde estás caminando/paseando?' },
+                        { speaker: 'Kusi', text: 'Mayu patantan purishani.', translation: 'Estoy caminando por la orilla del río.' }
+                    ]
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Ñan',
+                    spanish: 'Camino / Ruta',
+                    image: 'imagenes/lecciones/intermedio/leccion_17/imagen_5.jpg',
+                    explanation: 'La palabra <span class="font-bold text-teal-600">Ñan</span> se refiere al camino, la senda o la ruta que se sigue.'
+                },
+                {
+                    type: 'dialogue',
+                    title: 'Diálogo 4: Siguiendo el camino',
+                    conversation: [
+                        { speaker: 'Kusi', text: '¿Chaychu Inka ñan?', translation: '¿Ese es el Camino Inca?' },
+                        { speaker: 'Wayra', text: 'Arí, chaymi. Chay ñanta qatinki.', translation: 'Sí, ese es. Sigue ese camino.' }
+                    ]
+                }
+            ];
+
+            const questionBank = [
+                { type: 'multiple-choice', question: 'El verbo "Riy" significa...', options: ['Venir', 'Llegar', 'Ir'], correct: 'Ir', feedback: { correct: '¡Kusa! <strong>Riy</strong> es el verbo fundamental para "ir".', incorrect: 'Casi. La respuesta correcta es <strong>Ir</strong>. "Hamuy" es venir.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Paqarinmi', post_text: '. (Llegaré mañana)', correct: 'chayasaq', feedback: { correct: '¡Allin ruwasqa! Conjugaste el verbo <strong>chayay</strong> en futuro correctamente.', incorrect: 'La respuesta correcta es <strong>chayasaq</strong> (yo llegaré).' } },
+                { type: 'multiple-choice', question: '¿Qué significa "ñan"?', options: ['Pueblo', 'Montaña', 'Camino'], correct: 'Camino', feedback: { correct: '¡Excelente! <strong>Ñan</strong> es la palabra para camino o ruta.', incorrect: 'Recuerda que <strong>ñan</strong> significa "camino".' } },
+                { type: 'fill-in-the-blank', pre_text: '¿Maytan', post_text: '? (¿A dónde vas?)', correct: 'rinki', feedback: { correct: '¡Perfecto! <strong>Rinki</strong> es la conjugación correcta de "riy" para "tú vas".', incorrect: 'Para preguntar "¿a dónde vas?", se dice <strong>rinki</strong>.' } },
+                { type: 'multiple-choice', question: 'Para decir "caminar" o "pasear" usas el verbo...', options: ['Riy', 'Puriy', 'Chayay'], correct: 'Puriy', feedback: { correct: '¡Muy bien! <strong>Puriy</strong> es un verbo muy útil para caminar o viajar.', incorrect: 'No es correcto. El verbo es <strong>Puriy</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Mayu patantan', post_text: '. (Estoy caminando por la orilla del río)', correct: 'purishani', feedback: { correct: '¡Correcto! Usaste el presente progresivo <strong>-sha-</strong> muy bien.', incorrect: 'La respuesta correcta es <strong>purishani</strong>.' } },
+                { type: 'multiple-choice', question: '¿Qué significa "chayay"?', options: ['Salir', 'Llegar', 'Volver'], correct: 'Llegar', feedback: { correct: '¡Fantástico! <strong>Chayay</strong> es llegar a tu destino.', incorrect: 'La respuesta correcta es <strong>Llegar</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Cusco', post_text: 'tan rini. (Voy a Cusco)', correct: 'llaqta', feedback: { correct: '¡Muy bien! <strong>Llaqta</strong> significa pueblo o ciudad.', incorrect: 'La respuesta correcta es <strong>llaqta</strong>.' } },
+                { type: 'multiple-choice', question: '"Inka ñan" significa...', options: ['Pueblo Inca', 'Camino Inca', 'Casa Inca'], correct: 'Camino Inca', feedback: { correct: '¡Exacto! Es una de las rutas de senderismo más famosas del mundo.', incorrect: 'No. Significa <strong>Camino Inca</strong>, ya que "ñan" es camino.' } },
+                { type: 'fill-in-the-blank', pre_text: '¿Hayk\'aqmi', post_text: '? (¿Cuándo llegas?)', correct: 'chayanki', feedback: { correct: '¡Perfecto! Así se pregunta "¿cuándo llegas?".', incorrect: 'Para preguntar "cuándo llegas" se usa <strong>chayanki</strong>.' } }
+            ];
+            
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            shuffleArray(questionBank);
+            const selectedQuestions = questionBank.slice(0, 4);
+
+            const finalCard = {
+                type: 'final',
+                title: '¡Lección 17 Completada!',
+                text: '¡Felicitaciones! Ahora tienes el vocabulario básico para planificar un viaje. Puedes hablar de tus destinos, de cómo llegar y del camino a seguir.'
+            };
+            
+            const lessonData = [...baseLessonData, ...selectedQuestions, finalCard];
+
+            const lessonContainer = document.getElementById('lesson-container');
+            const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
+            const progressBar = document.getElementById('progress-bar');
+            
+            const createIntroductionCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><img src="${card.image}" class="w-full aspect-square object-cover rounded-lg mb-6" alt="${card.title}"><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-4 text-gray-600">${card.text}</p></div>`;
+            const createPresentationCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><img src="${card.image}" class="w-full aspect-square object-cover rounded-lg mb-6" alt="${card.quechua}"><div class="text-center"><p class="text-3xl font-bold text-teal-600">${card.quechua}</p><p class="text-xl text-gray-700 font-medium">${card.spanish}</p></div><p class="mt-6 text-center text-gray-600">${card.explanation}</p></div>`;
+            const createDialogueCard = (card) => { let conversationHtml = card.conversation.map(line => `<div class="mb-2"><span class="font-bold ${line.speaker === 'Wayra' ? 'text-teal-600' : 'text-indigo-600'}">${line.speaker}:</span><p class="inline ml-2 text-gray-800">${line.text}</p><p class="text-sm text-gray-500 ml-2 pl-4">${line.translation}</p></div>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><h3 class="text-xl font-bold text-center mb-4">${card.title}</h3><div class="space-y-2">${conversationHtml}</div></div>`; };
+            const createMultipleChoiceCard = (card) => { let optionsHtml = card.options.map(opt => `<button class="option-btn w-full text-left p-4 border-2 rounded-lg hover:bg-gray-100 transition-colors">${opt}</button>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><p class="text-lg font-medium text-gray-800 mb-4">${card.question}</p><div class="space-y-3">${optionsHtml}</div><div id="feedback-container" class="mt-4 text-center"></div></div>`; };
+            const createFillInTheBlankCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><p class="text-lg font-medium text-center text-gray-800 mb-4">${card.post_text}</p><div class="flex items-center justify-center space-x-2"><span class="text-2xl font-bold">${card.pre_text}</span><input id="fill-input" type="text" class="w-20 text-2xl font-bold border-b-2 border-gray-400 focus:border-teal-500 outline-none text-center" maxlength="15"><button id="check-fill-btn" class="bg-teal-600 text-white font-bold py-2 px-4 rounded-lg">Revisar</button></div><div id="feedback-container" class="mt-4 text-center"></div></div>`;
+            const createFinalCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><div class="flex justify-center mb-4"><svg class="h-16 w-16 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg></div><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-2 text-gray-600">${card.text}</p><a href="lecciones_intermedio.html" class="mt-6 inline-block bg-teal-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors">Volver a Lecciones</a></div>`;
+            
+            function setupMultipleChoice(card) { 
+                nextButton.disabled = true; 
+                const optionButtons = lessonContainer.querySelectorAll('.option-btn'); 
+                const feedbackContainer = lessonContainer.querySelector('#feedback-container');
+                optionButtons.forEach(button => { 
+                    button.addEventListener('click', () => { 
+                        optionButtons.forEach(btn => { 
+                            btn.disabled = true; 
+                            if (btn.textContent === card.correct) { btn.classList.add('correct'); } 
+                        }); 
+                        if (button.textContent !== card.correct) { 
+                            button.classList.add('incorrect'); 
+                            feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-red-600 font-medium">¡Uchay!</p><p class="text-gray-600 text-sm">${card.feedback.incorrect}</p></div>`;
+                        } else { 
+                            lessonScore += 10; 
+                            feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-green-600 font-medium">¡Kusa!</p><p class="text-gray-600 text-sm">${card.feedback.correct}</p></div>`;
+                        } 
+                        nextButton.disabled = false; 
+                    }); 
+                }); 
+            }
+            
+            function setupFillInTheBlank(card) { 
+                nextButton.disabled = true; 
+                const checkBtn = document.getElementById('check-fill-btn'); 
+                const input = document.getElementById('fill-input');
+                const feedbackContainer = lessonContainer.querySelector('#feedback-container');
+
+                function checkAnswer() {
+                    const isCorrect = input.value.trim().toLowerCase() === card.correct.toLowerCase(); 
+                    input.classList.add(isCorrect ? 'text-green-600' : 'text-red-600'); 
+                    input.disabled = true; 
+                    if(checkBtn) checkBtn.disabled = true; 
+                    if (isCorrect) {
+                        lessonScore += 10; 
+                        feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-green-600 font-medium">¡Allin Ruwasqa!</p><p class="text-gray-600 text-sm">${card.feedback.correct}</p></div>`;
+                    } else {
+                        feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-red-600 font-medium">¡Uchay!</p><p class="text-gray-600 text-sm">${card.feedback.incorrect}</p></div>`;
+                    }
+                    nextButton.disabled = false; 
+                }
+
+                if (checkBtn) {
+                     checkBtn.addEventListener('click', checkAnswer);
+                }
+               
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer();
+                    }
+                });
+            }
+
+            function loadCard(index) {
+                const card = lessonData[index];
+                switch (card.type) {
+                    case 'introduction': lessonContainer.innerHTML = createIntroductionCard(card); nextButton.disabled = false; break;
+                    case 'presentation': lessonContainer.innerHTML = createPresentationCard(card); nextButton.disabled = false; break;
+                    case 'dialogue': lessonContainer.innerHTML = createDialogueCard(card); nextButton.disabled = false; break;
+                    case 'multiple-choice': lessonContainer.innerHTML = createMultipleChoiceCard(card); setupMultipleChoice(card); break;
+                    case 'fill-in-the-blank': lessonContainer.innerHTML = createFillInTheBlankCard(card); setupFillInTheBlank(card); break;
+                    case 'final': lessonContainer.innerHTML = createFinalCard(card); nextButton.textContent = "Finalizar"; nextButton.disabled = false; break;
+                }
+                updateProgressBar();
+                updateNavButtons();
+            }
+
+            function updateProgressBar() { const progress = ((currentCardIndex) / (lessonData.length - 1)) * 100; progressBar.style.width = `${progress}%`; }
+            function updateNavButtons() { prevButton.disabled = currentCardIndex === 0; if (lessonData[currentCardIndex].type === 'final') { nextButton.textContent = "Finalizar"; } else { nextButton.textContent = "Siguiente"; } }
+
+            prevButton.addEventListener('click', () => { if (currentCardIndex > 0) { currentCardIndex--; loadCard(currentCardIndex); } });
+            nextButton.addEventListener('click', () => {
+                if (currentCardIndex < lessonData.length - 1) {
+                    currentCardIndex++;
+                    loadCard(currentCardIndex);
+                } else {
+                    // --- Guardar Progreso --- //
+                    const progressDataString = localStorage.getItem('yachayProgress') || '{}';
+                    const progress = JSON.parse(progressDataString);
+                    
+                    const currentTotalScore = progress.totalScore || 0;
+                    progress.totalScore = currentTotalScore + lessonScore;
+                    
+                    let completed = progress.completedLessons || [];
+                    if (!completed.includes(lessonId)) { 
+                        completed.push(lessonId); 
+                    }
+                    progress.completedLessons = completed;
+
+                    localStorage.setItem('yachayProgress', JSON.stringify(progress));
+                    window.location.href = 'lecciones_intermedio.html';
+                }
+            });
+
+            loadCard(currentCardIndex);
+        });
+    </script>
+</body>
+</html>

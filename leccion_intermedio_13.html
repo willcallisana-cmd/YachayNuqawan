@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lección 13: El Plural (-kuna) - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .option-btn.correct { background-color: #A7F3D0; border-color: #10B981; }
+        .option-btn.incorrect { background-color: #FECACA; border-color: #EF4444; }
+        .feedback-enter { animation: fadeIn 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between">
+                <a href="lecciones_intermedio.html" class="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mx-4">
+                    <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                 <a href="progreso.html" class="text-gray-500 hover:text-gray-800">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9a9.75 9.75 0 011.316-5.342 9.75 9.75 0 0113.634 1.316 9.75 9.75 0 01-5.342 13.634 9.75 9.75 0 01-1.316 5.342zM16.5 18.75a9.75 9.75 0 005.342-13.634m0 13.634a9.75 9.75 0 01-13.634-5.342m5.342 13.634a9.75 9.75 0 01-5.342-1.316M3.75 5.25a9.75 9.75 0 015.342-1.316m-5.342 1.316a9.75 9.75 0 011.316 5.342m-1.316-5.342a9.75 9.75 0 0113.634 5.342" /></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="lesson-container">
+                <!-- El contenido de la lección se cargará aquí -->
+            </div>
+            <div class="mt-8 flex justify-between">
+                <button id="prev-button" class="bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50" disabled>Anterior</button>
+                <button id="next-button" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition-colors">Siguiente</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lessonId = "lesson-13";
+            let lessonScore = 0;
+            let currentCardIndex = 0;
+
+            const baseLessonData = [
+                 {
+                    type: 'introduction',
+                    title: 'El Plural con -kuna: ¡Más de uno!',
+                    text: '¡Vamos a hablar de más de una cosa! En quechua, formar el plural es muy fácil. Solo añadimos el sufijo "-kuna" al final de un sustantivo para indicar que hay varios.',
+                    image: 'imagenes/lecciones/intermedio/leccion_13/imagen_1.png'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Wasikuna',
+                    spanish: 'Las casas',
+                    image: 'imagenes/lecciones/intermedio/leccion_13/imagen_2.png',
+                    explanation: 'Para hablar de más de una casa, a la palabra `wasi` (casa) le añadimos el sufijo <span class="font-bold text-teal-600">-kuna</span>.'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Misikuna',
+                    spanish: 'Los gatos',
+                    image: 'imagenes/lecciones/intermedio/leccion_13/imagen_3.png',
+                    explanation: 'Lo mismo aplica para los animales. `Misi` (gato) se convierte en <span class="font-bold text-teal-600">misikuna</span> (gatos).'
+                },
+                {
+                    type: 'dialogue',
+                    title: 'Diálogo 1: Hablando de animales',
+                    conversation: [
+                        { speaker: 'Wayra', text: 'Chaypi, ¿askha alqokuna kanchu?', translation: '¿Allí hay muchos perros?' },
+                        { speaker: 'Kusi', text: 'Arí, chaypiqa tawa alqokuna, iskay misikunapas kanku.', translation: 'Sí, allí hay cuatro perros y dos gatos.' }
+                    ]
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Yachachiqkuna',
+                    spanish: 'Los/Las profesores/as',
+                    image: 'imagenes/lecciones/intermedio/leccion_13/imagen_4.png',
+                    explanation: 'El sufijo <span class="font-bold text-teal-600">-kuna</span> también se usa para personas. `Yachachiq` (profesor) se convierte en `yachachiqkuna` (profesores).'
+                },
+                {
+                    type: 'dialogue',
+                    title: 'Diálogo 2: En el mercado',
+                    conversation: [
+                        { speaker: 'Kusi', text: '¿Hayk\'atan valen chay papakuna?', translation: '¿Cuánto cuestan esas papas?' },
+                        { speaker: 'Vendedor', text: 'Chay papakunaqa, pichqa solesmi.', translation: 'Esas papas cuestan cinco soles.' },
+                        { speaker: 'Kusi', text: 'Allinmi, chay saratawan ullukukunatawan apasaq.', translation: 'Está bien, llevaré ese maíz y esos ollucos.' }
+                    ]
+                },
+                {
+                    type: 'dialogue',
+                    title: 'Diálogo 3: Hablando de personas',
+                    conversation: [
+                        { speaker: 'Wayra', text: '¿Pikunan paykuna?', translation: '¿Quiénes son ellos?' },
+                        { speaker: 'Kusi', text: 'Paykunaqa yachaqmasiykunam.', translation: 'Ellos son mis compañeros de estudio.' }
+                    ]
+                },
+                {
+                    type: 'dialogue',
+                    title: 'Diálogo 4: Mezclando posesivos y plurales',
+                    conversation: [
+                        { speaker: 'Kusi', text: '¿Maypin qelqanaykikuna kashan?', translation: '¿Dónde están tus libros?' },
+                        { speaker: 'Wayra', text: 'Qelqanaykunaqa wasipin kashan.', translation: 'Mis libros están en mi casa.' },
+                        { speaker: 'Kusi', text: 'Ah, ¿wasinkupichu qelqanankuna kashan?', translation: 'Ah, ¿los libros de ellos están en su casa?' }
+                    ]
+                }
+            ];
+
+            const questionBank = [
+                { type: 'multiple-choice', question: '¿Cómo se dice "los perros" en quechua?', options: ['Alqo', 'Alqoyki', 'Alqokuna'], correct: 'Alqokuna', feedback: { correct: '¡Kusa! El sufijo <strong>-kuna</strong> es la clave para el plural.', incorrect: 'Casi. La respuesta correcta es <strong>Alqokuna</strong>. El sufijo <strong>-kuna</strong> indica plural.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Wasi', post_text: ' (Las casas)', correct: 'kuna', feedback: { correct: '¡Allin ruwasqa! Simplemente añades <strong>-kuna</strong> para formar el plural.', incorrect: 'La respuesta correcta es <strong>-kuna</strong> para decir "las casas".' } },
+                { type: 'multiple-choice', question: 'La palabra "yachachiqkuna" significa...', options: ['El profesor', 'Mi profesor', 'Los profesores'], correct: 'Los profesores', feedback: { correct: '¡Excelente! Reconociste el sufijo plural <strong>-kuna</strong>.', incorrect: 'Recuerda que el sufijo <strong>-kuna</strong> indica plural. La respuesta correcta es <strong>Los profesores</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'T\'anta', post_text: ' (Los panes)', correct: 'kuna', feedback: { correct: '¡Perfecto! El plural de "pan" es <strong>T\'antakuna</strong>.', incorrect: 'Para decir "los panes", simplemente añades el sufijo <strong>-kuna</strong>.' } },
+                { type: 'multiple-choice', question: 'Si "orqo" es cerro, ¿cómo se dice "los cerros"?', options: ['Orqoy', 'Orqokuna', 'Orqoyki'], correct: 'Orqokuna', feedback: { correct: '¡Muy bien! Aplicaste la regla del plural perfectamente.', incorrect: 'No es correcto. Para formar el plural, se añade <strong>-kuna</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Runa', post_text: ' (La gente / Las personas)', correct: 'kuna', feedback: { correct: '¡Correcto! "Runakuna" es la forma plural de "runa" (persona).', incorrect: 'La respuesta correcta es <strong>-kuna</strong> para indicar plural.' } },
+                { type: 'multiple-choice', question: '¿Qué significa "qelqanaykuna"?', options: ['Mis libros', 'Mi libro', 'Tus libros'], correct: 'Mis libros', feedback: { correct: '¡Fantástico! Identificaste el posesivo <strong>-y</strong> y el plural <strong>-kuna</strong>.', incorrect: 'La respuesta correcta es <strong>Mis libros</strong>. Se combinan <strong>-y</strong> (mi) y <strong>-kuna</strong> (plural).' } },
+                { type: 'fill-in-the-blank', pre_text: 'Wawa', post_text: ' (Los niños)', correct: 'kuna', feedback: { correct: '¡Muy bien! El plural de "wawa" es <strong>wawakuna</strong>.', incorrect: 'La respuesta correcta es <strong>-kuna</strong> para formar el plural.' } },
+                { type: 'multiple-choice', question: 'El sufijo "-kuna" se usa para...', options: ['Indicar posesión', 'Indicar plural', 'Indicar tiempo pasado'], correct: 'Indicar plural', feedback: { correct: '¡Exacto! <strong>-kuna</strong> es el sufijo universal para el plural en sustantivos.', incorrect: 'No. El sufijo <strong>-kuna</strong> se usa exclusivamente para indicar que hay más de uno de algo.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Misiyki', post_text: ' (Tus gatos)', correct: 'kuna', feedback: { correct: '¡Perfecto! Se añade <strong>-kuna</strong> después del posesivo para pluralizar.', incorrect: 'Para decir "tus gatos" se añade <strong>-kuna</strong> al final: Misiyki<strong>kuna</strong>.' } }
+            ];
+            
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            shuffleArray(questionBank);
+            const selectedQuestions = questionBank.slice(0, 4);
+
+            const finalCard = {
+                type: 'final',
+                title: '¡Lección 13 Completada!',
+                text: '¡Felicitaciones! Ahora sabes cómo hablar de varias cosas a la vez. El sufijo -kuna es una de las herramientas más útiles y comunes del quechua.'
+            };
+            
+            const lessonData = [...baseLessonData, ...selectedQuestions, finalCard];
+
+            const lessonContainer = document.getElementById('lesson-container');
+            const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
+            const progressBar = document.getElementById('progress-bar');
+            
+            const createIntroductionCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><img src="${card.image}" class="w-full aspect-square object-cover rounded-lg mb-6" alt="${card.title}"><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-4 text-gray-600">${card.text}</p></div>`;
+            const createPresentationCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><img src="${card.image}" class="w-full aspect-square object-cover rounded-lg mb-6" alt="${card.quechua}"><div class="text-center"><p class="text-3xl font-bold text-teal-600">${card.quechua}</p><p class="text-xl text-gray-700 font-medium">${card.spanish}</p></div><p class="mt-6 text-center text-gray-600">${card.explanation}</p></div>`;
+            const createDialogueCard = (card) => { let conversationHtml = card.conversation.map(line => `<div class="mb-2"><span class="font-bold ${line.speaker === 'Wayra' ? 'text-teal-600' : 'text-indigo-600'}">${line.speaker}:</span><p class="inline ml-2 text-gray-800">${line.text}</p><p class="text-sm text-gray-500 ml-2 pl-4">${line.translation}</p></div>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><h3 class="text-xl font-bold text-center mb-4">${card.title}</h3><div class="space-y-2">${conversationHtml}</div></div>`; };
+            const createMultipleChoiceCard = (card) => { let optionsHtml = card.options.map(opt => `<button class="option-btn w-full text-left p-4 border-2 rounded-lg hover:bg-gray-100 transition-colors">${opt}</button>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><p class="text-lg font-medium text-gray-800 mb-4">${card.question}</p><div class="space-y-3">${optionsHtml}</div><div id="feedback-container" class="mt-4 text-center"></div></div>`; };
+            const createFillInTheBlankCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><p class="text-lg font-medium text-center text-gray-800 mb-4">${card.post_text}</p><div class="flex items-center justify-center space-x-2"><span class="text-2xl font-bold">${card.pre_text}</span><input id="fill-input" type="text" class="w-20 text-2xl font-bold border-b-2 border-gray-400 focus:border-teal-500 outline-none text-center" maxlength="10"><button id="check-fill-btn" class="bg-teal-600 text-white font-bold py-2 px-4 rounded-lg">Revisar</button></div><div id="feedback-container" class="mt-4 text-center"></div></div>`;
+            const createFinalCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><div class="flex justify-center mb-4"><svg class="h-16 w-16 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg></div><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-2 text-gray-600">${card.text}</p><a href="lecciones_intermedio.html" class="mt-6 inline-block bg-teal-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors">Volver a Lecciones</a></div>`;
+            
+            function setupMultipleChoice(card) { 
+                nextButton.disabled = true; 
+                const optionButtons = lessonContainer.querySelectorAll('.option-btn'); 
+                const feedbackContainer = lessonContainer.querySelector('#feedback-container');
+                optionButtons.forEach(button => { 
+                    button.addEventListener('click', () => { 
+                        optionButtons.forEach(btn => { 
+                            btn.disabled = true; 
+                            if (btn.textContent === card.correct) { btn.classList.add('correct'); } 
+                        }); 
+                        if (button.textContent !== card.correct) { 
+                            button.classList.add('incorrect'); 
+                            feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-red-600 font-medium">¡Uchay!</p><p class="text-gray-600 text-sm">${card.feedback.incorrect}</p></div>`;
+                        } else { 
+                            lessonScore += 10; 
+                            feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-green-600 font-medium">¡Kusa!</p><p class="text-gray-600 text-sm">${card.feedback.correct}</p></div>`;
+                        } 
+                        nextButton.disabled = false; 
+                    }); 
+                }); 
+            }
+            
+            function setupFillInTheBlank(card) { 
+                nextButton.disabled = true; 
+                const checkBtn = document.getElementById('check-fill-btn'); 
+                const input = document.getElementById('fill-input');
+                const feedbackContainer = lessonContainer.querySelector('#feedback-container');
+
+                function checkAnswer() {
+                    const isCorrect = input.value.trim().toLowerCase() === card.correct.toLowerCase(); 
+                    input.classList.add(isCorrect ? 'text-green-600' : 'text-red-600'); 
+                    input.disabled = true; 
+                    if(checkBtn) checkBtn.disabled = true; 
+                    if (isCorrect) {
+                        lessonScore += 10; 
+                        feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-green-600 font-medium">¡Allin Ruwasqa!</p><p class="text-gray-600 text-sm">${card.feedback.correct}</p></div>`;
+                    } else {
+                        feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-red-600 font-medium">¡Uchay!</p><p class="text-gray-600 text-sm">${card.feedback.incorrect}</p></div>`;
+                    }
+                    nextButton.disabled = false; 
+                }
+
+                if (checkBtn) {
+                     checkBtn.addEventListener('click', checkAnswer);
+                }
+               
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer();
+                    }
+                });
+            }
+
+            function loadCard(index) {
+                const card = lessonData[index];
+                switch (card.type) {
+                    case 'introduction': lessonContainer.innerHTML = createIntroductionCard(card); nextButton.disabled = false; break;
+                    case 'presentation': lessonContainer.innerHTML = createPresentationCard(card); nextButton.disabled = false; break;
+                    case 'dialogue': lessonContainer.innerHTML = createDialogueCard(card); nextButton.disabled = false; break;
+                    case 'multiple-choice': lessonContainer.innerHTML = createMultipleChoiceCard(card); setupMultipleChoice(card); break;
+                    case 'fill-in-the-blank': lessonContainer.innerHTML = createFillInTheBlankCard(card); setupFillInTheBlank(card); break;
+                    case 'final': lessonContainer.innerHTML = createFinalCard(card); nextButton.textContent = "Finalizar"; nextButton.disabled = false; break;
+                }
+                updateProgressBar();
+                updateNavButtons();
+            }
+
+            function updateProgressBar() { const progress = ((currentCardIndex) / (lessonData.length - 1)) * 100; progressBar.style.width = `${progress}%`; }
+            function updateNavButtons() { prevButton.disabled = currentCardIndex === 0; if (lessonData[currentCardIndex].type === 'final') { nextButton.textContent = "Finalizar"; } else { nextButton.textContent = "Siguiente"; } }
+
+            prevButton.addEventListener('click', () => { if (currentCardIndex > 0) { currentCardIndex--; loadCard(currentCardIndex); } });
+            nextButton.addEventListener('click', () => {
+                if (currentCardIndex < lessonData.length - 1) {
+                    currentCardIndex++;
+                    loadCard(currentCardIndex);
+                } else {
+                    // --- Guardar Progreso --- //
+                    const progressDataString = localStorage.getItem('yachayProgress') || '{}';
+                    const progress = JSON.parse(progressDataString);
+                    
+                    const currentTotalScore = progress.totalScore || 0;
+                    progress.totalScore = currentTotalScore + lessonScore;
+                    
+                    let completed = progress.completedLessons || [];
+                    if (!completed.includes(lessonId)) { 
+                        completed.push(lessonId); 
+                    }
+                    progress.completedLessons = completed;
+
+                    localStorage.setItem('yachayProgress', JSON.stringify(progress));
+                    window.location.href = 'lecciones_intermedio.html';
+                }
+            });
+
+            loadCard(currentCardIndex);
+        });
+    </script>
+</body>
+</html>

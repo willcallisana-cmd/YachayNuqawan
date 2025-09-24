@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecciones de Quechua - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .overlay { transition: background-color 0.3s ease; }
+        .group:hover .overlay { background-color: rgba(0, 0, 0, 0.4); }
+        .completed-overlay { background-color: rgba(20, 184, 166, 0.6); }
+        .completed-icon {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            transition: opacity 0.3s ease;
+        }
+        .completed .completed-icon { display: block; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <svg class="h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                </svg>
+                <span class="text-2xl font-bold text-gray-800">Yachay</span>
+            </a>
+            <div>
+                 <a href="progreso.html" class="text-gray-600 hover:text-teal-600 font-medium">Mi Progreso</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12 sm:py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                Elige tu punto de partida
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+                Selecciona una lección para comenzar tu aventura en el mundo del quechua.
+            </p>
+            <div class="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                <!-- Tarjeta 1 -->
+                <a href="leccion_saludos.html" id="lesson-1" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1583318982652-320d7f35b91f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de dos personas saludándose en los Andes]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 1: Saludos</h3>
+                    </div>
+                </a>
+                <!-- Tarjeta 2 -->
+                <a href="leccion_familia.html" id="lesson-2" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1599819875883-e187b5a5b281?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de una familia andina]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 2: La Familia</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 3 -->
+                <a href="leccion_numeros.html" id="lesson-3" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1621382438833-25a53856b3b2?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de un Quipu o conteo andino]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 3: Los Números</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 4 -->
+                <a href="leccion_mercado.html" id="lesson-4" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1563231984-7389c9e5e6e8?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de un mercado andino con productos]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 4: En el Mercado</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 5 -->
+                <a href="leccion_animales.html" id="lesson-5" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1589923178550-3a8813c71b69?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de llamas en los Andes]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 5: Animales</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 6 -->
+                <a href="#" id="lesson-6" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1579717282512-a18a5f220268?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de comida peruana]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 6: La Comida</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 7 -->
+                <a href="#" id="lesson-7" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1558961363-fa8fdfc50d0a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de un cielo andino con nubes]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 7: El Clima</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 8 -->
+                <a href="#" id="lesson-8" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1601594967351-344c21827a53?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de una persona señalando su corazón]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 8: El Cuerpo</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 9 -->
+                <a href="#" id="lesson-9" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1565021482833-25b8a6a69801?q=80&w=1968&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de textiles peruanos de colores]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 9: Los Colores</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 10 -->
+                <a href="#" id="lesson-10" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="https://images.unsplash.com/photo-1506543271236-3a0338a6a1e5?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="absolute h-full w-full object-cover" alt="[Imagen de ropa tradicional andina]">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                     <div class="completed-icon">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 10: La Ropa</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const completedLessons = JSON.parse(localStorage.getItem('yachayCompletedLessons')) || [];
+            completedLessons.forEach(lessonId => {
+                const lessonCard = document.getElementById(lessonId);
+                if (lessonCard) {
+                    lessonCard.classList.add('completed');
+                    const overlay = lessonCard.querySelector('.overlay');
+                    if(overlay) {
+                        overlay.classList.add('completed-overlay');
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

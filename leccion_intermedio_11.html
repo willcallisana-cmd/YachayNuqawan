@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lección 11: Sufijos Posesivos - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .option-btn.correct { background-color: #A7F3D0; border-color: #10B981; }
+        .option-btn.incorrect { background-color: #FECACA; border-color: #EF4444; }
+        .feedback-enter { animation: fadeIn 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between">
+                <a href="lecciones_intermedio.html" class="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mx-4">
+                    <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                 <a href="progreso.html" class="text-gray-500 hover:text-gray-800">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9a9.75 9.75 0 011.316-5.342 9.75 9.75 0 0113.634 1.316 9.75 9.75 0 01-5.342 13.634 9.75 9.75 0 01-1.316 5.342zM16.5 18.75a9.75 9.75 0 005.342-13.634m0 13.634a9.75 9.75 0 01-13.634-5.342m5.342 13.634a9.75 9.75 0 01-5.342-1.316M3.75 5.25a9.75 9.75 0 015.342-1.316m-5.342 1.316a9.75 9.75 0 011.316 5.342m-1.316-5.342a9.75 9.75 0 0113.634 5.342" /></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="lesson-container">
+                <!-- El contenido de la lección se cargará aquí -->
+            </div>
+            <div class="mt-8 flex justify-between">
+                <button id="prev-button" class="bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50" disabled>Anterior</button>
+                <button id="next-button" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition-colors">Siguiente</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lessonId = "lesson-11";
+            let lessonScore = 0;
+            let currentCardIndex = 0;
+
+            const baseLessonData = [
+                 {
+                    type: 'introduction',
+                    title: 'Sufijos Posesivos: ¡Haciendo tuyas las palabras!',
+                    text: 'En quechua, no usamos palabras como "mi" o "tu". En su lugar, añadimos terminaciones (sufijos) a las palabras para mostrar a quién pertenecen. ¡Vamos a descubrir cómo hacerlo!',
+                    image: 'imagenes/lecciones/intermedio/leccion_11/imagen_1.jpg'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Wasiy',
+                    spanish: 'Mi casa',
+                    image: 'imagenes/lecciones/intermedio/leccion_11/imagen_2.png',
+                    explanation: 'El sufijo <span class="font-bold text-teal-600">-y</span> al final de una palabra significa "mi". Wasi (casa) + y = Wasiy (mi casa).'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Alqoyki',
+                    spanish: 'Tu perro',
+                    image: 'imagenes/lecciones/intermedio/leccion_11/imagen_3.png',
+                    explanation: 'El sufijo <span class="font-bold text-teal-600">-yki</span> significa "tu". Alqo (perro) + yki = Alqoyki (tu perro).'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Misin',
+                    spanish: 'Su gato (de él/ella)',
+                    image: 'imagenes/lecciones/intermedio/leccion_11/imagen_4.png',
+                    explanation: 'El sufijo <span class="font-bold text-teal-600">-n</span> significa "su". Misi (gato) + n = Misin (su gato).'
+                },
+                {
+                    type: 'dialogue',
+                    title: 'Diálogo 1: Hablando de la familia',
+                    conversation: [
+                        { speaker: 'Wayra', text: 'Allin p\'unchaw, Kusi. ¿Payqa mamaykichu?', translation: 'Buenos días, Kusi. ¿Ella es tu mamá?' },
+                        { speaker: 'Kusi', text: 'Arí, payqa mamaymi. Sutinqa Hakuymi.', translation: 'Sí, ella es mi mamá. Su nombre es Hakuy.' },
+                        { speaker: 'Wayra', text: '¡Kusa! Ñoqapaq taytaypa sutinqa Urpiman.', translation: '¡Qué bien! El nombre de mi papá es Urpi.' }
+                    ]
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Wasinchis',
+                    spanish: 'Nuestra casa (de todos nosotros)',
+                    image: 'imagenes/lecciones/intermedio/leccion_11/imagen_5.png',
+                    explanation: 'El sufijo <span class="font-bold text-teal-600">-nchis</span> significa "nuestro" e incluye a la persona con la que hablas. Es un "nosotros inclusivo".'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Llaqtayku',
+                    spanish: 'Nuestro pueblo (sin incluirte)',
+                    image: 'imagenes/lecciones/intermedio/leccion_11/imagen_6.png',
+                    explanation: 'El sufijo <span class="font-bold text-teal-600">-yku</span> también significa "nuestro", pero excluye a la persona con la que hablas. Es un "nosotros exclusivo".'
+                },
+                 {
+                    type: 'dialogue',
+                    title: 'Diálogo 2: "Nosotros" inclusivo vs. exclusivo',
+                    conversation: [
+                        { speaker: 'Turista', text: '¿Maymantan kankichis?', translation: '¿De dónde son ustedes?' },
+                        { speaker: 'Kusi', text: 'Ñoqaykuqa Cusco llaqtamantan kayku.', translation: 'Nosotros (sin incluirte) somos del pueblo de Cusco.' },
+                        { speaker: 'Wayra', text: 'Arí, llaqtanchisqa ancha munaymi.', translation: 'Sí, nuestro pueblo (incluyéndote) es muy bonito.' }
+                    ]
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Chakraykichis',
+                    spanish: 'Vuestra chacra / Su chacra de ustedes',
+                    image: 'imagenes/lecciones/intermedio/leccion_11/imagen_7.png',
+                    explanation: 'El sufijo <span class="font-bold text-teal-600">-ykichis</span> se usa para "vuestro" o "de ustedes".'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'P\'unchawnku',
+                    spanish: 'Su poncho (de ellos/ellas)',
+                    image: 'imagenes/lecciones/intermedio/leccion_11/imagen_8.png',
+                    explanation: 'El sufijo <span class="font-bold text-teal-600">-nku</span> significa "su" cuando pertenece a un grupo de personas (ellos/ellas).'
+                },
+                 {
+                    type: 'dialogue',
+                    title: 'Diálogo 3: Hablando de pertenencias',
+                    conversation: [
+                        { speaker: 'Wayra', text: '¿Kaychu qelqanayki?', translation: '¿Este es tu libro?' },
+                        { speaker: 'Kusi', text: 'Manan, chayqa qelqananmi.', translation: 'No, ese es su libro (de él/ella).' },
+                        { speaker: 'Wayra', text: 'Ah, y ¿maypitaq qelqananku?', translation: 'Ah, ¿y dónde está el libro de ellos?' }
+                    ]
+                },
+                {
+                    type: 'dialogue',
+                    title: 'Diálogo 4: Describiendo animales',
+                    conversation: [
+                        { speaker: 'Kusi', text: 'Alqoyqa ancha pukllaqmi.', translation: 'Mi perro es muy juguetón.' },
+                        { speaker: 'Wayra', text: '¿Y misiyki? ¿Pukllaqllataqchu?', translation: '¿Y tu gato? ¿También es juguetón?' },
+                        { speaker: 'Kusi', text: 'Manan, misiyqa puñuyllamantan.', translation: 'No, mi gato es muy dormilón.' }
+                    ]
+                }
+            ];
+
+            const questionBank = [
+                { type: 'multiple-choice', question: '¿Cómo se dice "Mi libro" en quechua?', options: ['Qelqana', 'Qelqanayki', 'Qelqanay'], correct: 'Qelqanay', feedback: { correct: '¡Kusa! Exactamente, el sufijo <strong>-y</strong> indica "mi".', incorrect: 'Casi. La respuesta correcta es <strong>Qelqanay</strong>. Recuerda que <strong>-y</strong> es para "mi".' } },
+                { type: 'fill-in-the-blank', pre_text: 'T\'anta', post_text: ' (Tu pan)', correct: 'yki', feedback: { correct: '¡Allin ruwasqa! Añadiste el sufijo <strong>-yki</strong> correctamente.', incorrect: 'La respuesta correcta es <strong>-yki</strong> para decir "tu pan".' } },
+                { type: 'multiple-choice', question: 'La frase "Wasin" significa...', options: ['Mi casa', 'Su casa (de él/ella)', 'Nuestra casa'], correct: 'Su casa (de él/ella)', feedback: { correct: '¡Excelente! El sufijo <strong>-n</strong> indica posesión de tercera persona (su).', incorrect: 'Recuerda que el sufijo <strong>-n</strong> significa "su". La respuesta correcta es <strong>Su casa (de él/ella)</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Suti', post_text: ' (Mi nombre)', correct: 'y', feedback: { correct: '¡Perfecto! El sufijo <strong>-y</strong> se usa para "mi".', incorrect: 'Para decir "mi nombre", se usa el sufijo <strong>-y</strong>.' } },
+                { type: 'multiple-choice', question: '¿Cuál es el sufijo para "de ustedes"?', options: ['-yku', '-nku', '-ykichis'], correct: '-ykichis', feedback: { correct: '¡Muy bien! El sufijo para "de ustedes" es siempre <strong>-ykichis</strong>.', incorrect: 'No es correcto. El sufijo para "de ustedes" es <strong>-ykichis</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Misi', post_text: ' (Su gato de ellos)', correct: 'nku', feedback: { correct: '¡Correcto! El sufijo <strong>-nku</strong> indica que es "su gato" (de ellos).', incorrect: 'La respuesta correcta es <strong>-nku</strong> para indicar "su" de ellos.' } },
+                { type: 'multiple-choice', question: '¿Qué significa "Alqoy"?', options: ['Tu perro', 'Mi perro', 'Su perro'], correct: 'Mi perro', feedback: { correct: '¡Fantástico! Reconociste el sufijo <strong>-y</strong> que significa "mi".', incorrect: 'La respuesta correcta es <strong>Mi perro</strong>, por el sufijo <strong>-y</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Mama', post_text: ' (Tu mamá)', correct: 'yki', feedback: { correct: '¡Muy bien! Añadiste el sufijo <strong>-yki</strong> para "tu".', incorrect: 'La respuesta correcta es <strong>-yki</strong> para formar "tu mamá".' } },
+                { type: 'multiple-choice', question: '"Llaqtanchis" es un "nosotros" que...', options: ['Excluye al oyente', 'Incluye al oyente', 'Solo se usa para objetos'], correct: 'Incluye al oyente', feedback: { correct: '¡Exacto! <strong>-nchis</strong> es el "nosotros" inclusivo, que abraza a todos.', incorrect: 'No. El sufijo <strong>-nchis</strong> es especial porque siempre incluye a la persona con la que hablas.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Tayta', post_text: ' (Mi papá)', correct: 'y', feedback: { correct: '¡Perfecto! El sufijo <strong>-y</strong> indica "mi".', incorrect: 'Para decir "mi papá" debes añadir el sufijo <strong>-y</strong>.' } }
+            ];
+            
+            // --- El resto del script sigue igual --- //
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            shuffleArray(questionBank);
+            const selectedQuestions = questionBank.slice(0, 4);
+
+            const finalCard = {
+                type: 'final',
+                title: '¡Lección 11 Completada!',
+                text: '¡Felicitaciones! Has dominado los sufijos posesivos. Ahora puedes hablar de tus cosas y las de los demás en quechua.'
+            };
+            
+            const lessonData = [...baseLessonData, ...selectedQuestions, finalCard];
+
+            const lessonContainer = document.getElementById('lesson-container');
+            const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
+            const progressBar = document.getElementById('progress-bar');
+            
+            // --- Funciones para crear tarjetas --- //
+            const createIntroductionCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><img src="${card.image}" class="w-full aspect-square object-cover rounded-lg mb-6" alt="${card.title}"><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-4 text-gray-600">${card.text}</p></div>`;
+            const createPresentationCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><img src="${card.image}" class="w-full aspect-square object-cover rounded-lg mb-6" alt="${card.quechua}"><div class="text-center"><p class="text-3xl font-bold text-teal-600">${card.quechua}</p><p class="text-xl text-gray-700 font-medium">${card.spanish}</p></div><p class="mt-6 text-center text-gray-600">${card.explanation}</p></div>`;
+            const createDialogueCard = (card) => { let conversationHtml = card.conversation.map(line => `<div class="mb-2"><span class="font-bold ${line.speaker === 'Wayra' ? 'text-teal-600' : 'text-indigo-600'}">${line.speaker}:</span><p class="inline ml-2 text-gray-800">${line.text}</p><p class="text-sm text-gray-500 ml-2 pl-4">${line.translation}</p></div>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><h3 class="text-xl font-bold text-center mb-4">${card.title}</h3><div class="space-y-2">${conversationHtml}</div></div>`; };
+            const createMultipleChoiceCard = (card) => { let optionsHtml = card.options.map(opt => `<button class="option-btn w-full text-left p-4 border-2 rounded-lg hover:bg-gray-100 transition-colors">${opt}</button>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><p class="text-lg font-medium text-gray-800 mb-4">${card.question}</p><div class="space-y-3">${optionsHtml}</div><div id="feedback-container" class="mt-4 text-center"></div></div>`; };
+            const createFillInTheBlankCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><p class="text-lg font-medium text-center text-gray-800 mb-4">${card.post_text}</p><div class="flex items-center justify-center space-x-2"><span class="text-2xl font-bold">${card.pre_text}</span><input id="fill-input" type="text" class="w-20 text-2xl font-bold border-b-2 border-gray-400 focus:border-teal-500 outline-none text-center" maxlength="10"><button id="check-fill-btn" class="bg-teal-600 text-white font-bold py-2 px-4 rounded-lg">Revisar</button></div><div id="feedback-container" class="mt-4 text-center"></div></div>`;
+            const createFinalCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><div class="flex justify-center mb-4"><svg class="h-16 w-16 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg></div><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-2 text-gray-600">${card.text}</p><a href="lecciones_intermedio.html" class="mt-6 inline-block bg-teal-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors">Volver a Lecciones</a></div>`;
+            
+            function setupMultipleChoice(card) { 
+                nextButton.disabled = true; 
+                const optionButtons = lessonContainer.querySelectorAll('.option-btn'); 
+                const feedbackContainer = lessonContainer.querySelector('#feedback-container');
+                optionButtons.forEach(button => { 
+                    button.addEventListener('click', () => { 
+                        optionButtons.forEach(btn => { 
+                            btn.disabled = true; 
+                            if (btn.textContent === card.correct) { btn.classList.add('correct'); } 
+                        }); 
+                        if (button.textContent !== card.correct) { 
+                            button.classList.add('incorrect'); 
+                            feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-red-600 font-medium">¡Uchay!</p><p class="text-gray-600 text-sm">${card.feedback.incorrect}</p></div>`;
+                        } else { 
+                            lessonScore += 10; 
+                            feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-green-600 font-medium">¡Kusa!</p><p class="text-gray-600 text-sm">${card.feedback.correct}</p></div>`;
+                        } 
+                        nextButton.disabled = false; 
+                    }); 
+                }); 
+            }
+            
+            function setupFillInTheBlank(card) { 
+                nextButton.disabled = true; 
+                const checkBtn = document.getElementById('check-fill-btn'); 
+                const input = document.getElementById('fill-input');
+                const feedbackContainer = lessonContainer.querySelector('#feedback-container');
+                checkBtn.addEventListener('click', () => { 
+                    const isCorrect = input.value.trim().toLowerCase() === card.correct.toLowerCase(); 
+                    input.classList.add(isCorrect ? 'text-green-600' : 'text-red-600'); 
+                    input.disabled = true; 
+                    checkBtn.disabled = true; 
+                    if (isCorrect) {
+                        lessonScore += 10; 
+                        feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-green-600 font-medium">¡Allin Ruwasqa!</p><p class="text-gray-600 text-sm">${card.feedback.correct}</p></div>`;
+                    } else {
+                        feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-red-600 font-medium">¡Uchay!</p><p class="text-gray-600 text-sm">${card.feedback.incorrect}</p></div>`;
+                    }
+                    nextButton.disabled = false; 
+                }); 
+            }
+
+            function loadCard(index) {
+                const card = lessonData[index];
+                switch (card.type) {
+                    case 'introduction': lessonContainer.innerHTML = createIntroductionCard(card); nextButton.disabled = false; break;
+                    case 'presentation': lessonContainer.innerHTML = createPresentationCard(card); nextButton.disabled = false; break;
+                    case 'dialogue': lessonContainer.innerHTML = createDialogueCard(card); nextButton.disabled = false; break;
+                    case 'multiple-choice': lessonContainer.innerHTML = createMultipleChoiceCard(card); setupMultipleChoice(card); break;
+                    case 'fill-in-the-blank': lessonContainer.innerHTML = createFillInTheBlankCard(card); setupFillInTheBlank(card); break;
+                    case 'final': lessonContainer.innerHTML = createFinalCard(card); nextButton.textContent = "Finalizar"; nextButton.disabled = false; break;
+                }
+                updateProgressBar();
+                updateNavButtons();
+            }
+
+            function updateProgressBar() { const progress = ((currentCardIndex) / (lessonData.length - 1)) * 100; progressBar.style.width = `${progress}%`; }
+            function updateNavButtons() { prevButton.disabled = currentCardIndex === 0; if (lessonData[currentCardIndex].type === 'final') { nextButton.textContent = "Finalizar"; } else { nextButton.textContent = "Siguiente"; } }
+
+            prevButton.addEventListener('click', () => { if (currentCardIndex > 0) { currentCardIndex--; loadCard(currentCardIndex); } });
+            nextButton.addEventListener('click', () => {
+                if (currentCardIndex < lessonData.length - 1) {
+                    currentCardIndex++;
+                    loadCard(currentCardIndex);
+                } else {
+                    const progressDataString = localStorage.getItem('yachayProgress') || '{}';
+                    const progress = JSON.parse(progressDataString);
+                    
+                    const currentTotalScore = progress.totalScore || 0;
+                    progress.totalScore = currentTotalScore + lessonScore;
+                    
+                    let completed = progress.completedLessons || [];
+                    if (!completed.includes(lessonId)) { 
+                        completed.push(lessonId); 
+                    }
+                    progress.completedLessons = completed;
+
+                    localStorage.setItem('yachayProgress', JSON.stringify(progress));
+                    window.location.href = 'lecciones_intermedio.html';
+                }
+            });
+
+            loadCard(currentCardIndex);
+        });
+    </script>
+</body>
+</html>

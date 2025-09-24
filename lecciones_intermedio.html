@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nivel Intermedio - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .overlay { transition: background-color 0.3s ease; }
+        .group:hover .overlay { background-color: rgba(0, 0, 0, 0.1); }
+        .coming-soon .overlay { background-color: rgba(0, 0, 0, 0.5); }
+        .coming-soon-text { display: none; }
+        .coming-soon .coming-soon-text { display: block; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="niveles.html" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                <span class="font-medium">Volver a Niveles</span>
+            </a>
+            <div>
+                 <a href="progreso.html" class="text-gray-600 hover:text-teal-600 font-medium">Mi Progreso</a>
+            </div>
+        </div>
+    </header>
+    
+    <main class="py-16 sm:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+                Nivel Intermedio
+            </h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+                Profundiza tus conocimientos. Aquí aprenderás gramática, tiempos verbales y vocabulario más complejo.
+            </p>
+
+            <div id="lessons-grid" class="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+                <!-- Tarjeta 1 -->
+                <a href="leccion_intermedio_11.html" id="lesson-11" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_11.png" class="absolute h-full w-full object-cover" alt="Persona escribiendo en un cuaderno">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 11: Sufijos Posesivos</h3>
+                    </div>
+                </a>
+                <!-- Tarjeta 2 -->
+                <a href="leccion_intermedio_12.html" id="lesson-12" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_12.png" class="absolute h-full w-full object-cover" alt="Amanecer en las montañas">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 12: Tiempos Verbales</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 3 -->
+                <a href="leccion_intermedio_13.html" id="lesson-13" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_13.png" class="absolute h-full w-full object-cover" alt="Grupo de personas en comunidad">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 13: El Plural (-kuna)</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 4 -->
+                <a href="leccion_intermedio_14.html" id="lesson-14" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_14.png" class="absolute h-full w-full object-cover" alt="Manos unidas formando un círculo">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 14: Preguntas Complejas</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 5 -->
+                <a href="leccion_intermedio_15.html" id="lesson-15" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_15.png" class="absolute h-full w-full object-cover" alt="Campos de cultivo en terrazas andinas">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 15: En la Chacra</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 6 -->
+                <a href="leccion_intermedio_16.html" id="lesson-16" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_16.png" class="absolute h-full w-full object-cover" alt="Retrato de una persona mayor sonriendo">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 16: Describiendo Personas</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 7 -->
+                <a href="leccion_intermedio_17.html" id="lesson-17" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_17.png" class="absolute h-full w-full object-cover" alt="Persona con mochila mirando un mapa">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 17: Viajando por el Tawantinsuyu</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 8 -->
+                <a href="leccion_intermedio_18.html" id="lesson-18" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_18.png" class="absolute h-full w-full object-cover" alt="Personas conversando y construyendo algo juntas">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 18: Construyendo Oraciones</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 9 -->
+                <a href="leccion_intermedio_19.html" id="lesson-19" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_19.png" class="absolute h-full w-full object-cover" alt="Ojo, oreja, nariz, boca y mano en un collage">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 19: Los 5 Sentidos</h3>
+                    </div>
+                </a>
+                 <!-- Tarjeta 10 -->
+                <a href="leccion_intermedio_20.html" id="lesson-20" class="group block rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300 relative aspect-[2/3]">
+                    <img src="imagenes/lecciones/intermedio/imagen_20.png" class="absolute h-full w-full object-cover" alt="Camino que se extiende hacia el futuro">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent overlay"></div>
+                    <div class="absolute bottom-0 left-0 right-0 p-3">
+                        <h3 class="text-white font-bold text-sm sm:text-base">Lección 20: Planes a Futuro</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

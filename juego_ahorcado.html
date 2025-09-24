@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: Ahorcado - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .letter-btn {
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .letter-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .hangman-part {
+            stroke: #1F2937; /* gray-800 */
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round;
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="juegos.html" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                <span class="font-medium">Volver a Juegos</span>
+            </a>
+            <h1 class="text-xl font-bold text-gray-800">Ahorcado</h1>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                
+                <!-- Columna del Ahorcado -->
+                <div class="bg-white rounded-lg shadow-xl p-6 flex justify-center items-center">
+                    <svg id="hangman-svg" class="w-full h-auto max-w-xs" viewBox="0 0 200 250">
+                        <!-- Base -->
+                        <line class="hangman-part" x1="10" y1="230" x2="190" y2="230" /> 
+                        <!-- Poste vertical -->
+                        <line class="hangman-part" x1="50" y1="230" x2="50" y2="20" /> 
+                        <!-- Poste horizontal -->
+                        <line class="hangman-part" x1="50" y1="20" x2="150" y2="20" /> 
+                        <!-- Cuerda -->
+                        <line class="hangman-part" x1="150" y1="20" x2="150" y2="50" /> 
+                        <!-- Cabeza -->
+                        <circle class="hangman-part" id="head" cx="150" cy="70" r="20" style="opacity:0;"/>
+                        <!-- Cuerpo -->
+                        <line class="hangman-part" id="body" x1="150" y1="90" x2="150" y2="150" style="opacity:0;"/>
+                        <!-- Brazo izquierdo -->
+                        <line class="hangman-part" id="arm-left" x1="150" y1="110" x2="120" y2="130" style="opacity:0;"/>
+                        <!-- Brazo derecho -->
+                        <line class="hangman-part" id="arm-right" x1="150" y1="110" x2="180" y2="130" style="opacity:0;"/>
+                        <!-- Pierna izquierda -->
+                        <line class="hangman-part" id="leg-left" x1="150" y1="150" x2="120" y2="180" style="opacity:0;"/>
+                        <!-- Pierna derecha -->
+                        <line class="hangman-part" id="leg-right" x1="150" y1="150" x2="180" y2="180" style="opacity:0;"/>
+                    </svg>
+                </div>
+
+                <!-- Columna del Juego -->
+                <div class="flex flex-col items-center justify-center">
+                    <p id="hint-display" class="text-lg text-gray-600 mb-4 h-6"></p>
+                    <div id="word-display" class="flex space-x-2 mb-8">
+                        <!-- Letras se generan aquí -->
+                    </div>
+                    <div id="keyboard" class="grid grid-cols-7 gap-2 max-w-md">
+                        <!-- Teclado se genera aquí -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Resultado -->
+    <div id="result-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 text-center max-w-sm mx-auto">
+            <h3 id="modal-title" class="text-3xl font-bold"></h3>
+            <p class="mt-4 text-lg text-gray-600">La palabra era:</p>
+            <p id="correct-word" class="mt-2 text-2xl font-bold text-teal-600"></p>
+            <button id="play-again-button" class="mt-6 bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition-colors">
+                Jugar de Nuevo
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const words = [
+                { word: 'INTI', hint: 'Astro rey del día' },
+                { word: 'KILLA', hint: 'Astro de la noche' },
+                { word: 'YAKU', hint: 'Líquido vital incoloro' },
+                { word: 'WASI', hint: 'Lugar donde vives' },
+                { word: 'QOSQO', hint: 'Capital del Imperio Inca' },
+                { word: 'ALLPA', hint: 'Superficie que pisamos' },
+                { word: 'MAYU', hint: 'Corriente de agua natural' },
+                { word: 'ORQO', hint: 'Elevación natural de terreno' }
+            ];
+
+            const wordDisplay = document.getElementById('word-display');
+            const keyboard = document.getElementById('keyboard');
+            const hintDisplay = document.getElementById('hint-display');
+            const resultModal = document.getElementById('result-modal');
+            const modalTitle = document.getElementById('modal-title');
+            const correctWordDisplay = document.getElementById('correct-word');
+            const playAgainButton = document.getElementById('play-again-button');
+            const hangmanParts = ['head', 'body', 'arm-left', 'arm-right', 'leg-left', 'leg-right'];
+
+            let selectedWord = '';
+            let guessedLetters = [];
+            let wrongGuesses = 0;
+            const MAX_WRONG_GUESSES = 6;
+
+            function startGame() {
+                const randomIndex = Math.floor(Math.random() * words.length);
+                selectedWord = words[randomIndex].word;
+                hintDisplay.textContent = `Pista: ${words[randomIndex].hint}`;
+                
+                guessedLetters = [];
+                wrongGuesses = 0;
+                
+                wordDisplay.innerHTML = selectedWord.split('').map(() => 
+                    `<div class="w-10 h-12 bg-gray-200 rounded flex items-center justify-center text-2xl font-bold"></div>`
+                ).join('');
+
+                renderKeyboard();
+                updateHangman();
+                resultModal.classList.add('hidden');
+            }
+
+            function renderKeyboard() {
+                keyboard.innerHTML = '';
+                const letters = 'ABCDEFGHIJKLMNÑOPQRSTUVWXYZ'.split('');
+                letters.forEach(letter => {
+                    const button = document.createElement('button');
+                    button.textContent = letter;
+                    button.classList.add('letter-btn', 'p-2', 'bg-white', 'rounded', 'shadow', 'font-medium', 'text-lg', 'border', 'border-gray-200', 'hover:bg-gray-100');
+                    button.addEventListener('click', () => handleGuess(letter));
+                    keyboard.appendChild(button);
+                });
+            }
+
+            function handleGuess(letter) {
+                if (guessedLetters.includes(letter)) return;
+
+                guessedLetters.push(letter);
+                
+                const letterButton = Array.from(keyboard.children).find(btn => btn.textContent === letter);
+                letterButton.disabled = true;
+
+                if (selectedWord.includes(letter)) {
+                    letterButton.classList.add('bg-green-200');
+                    renderWord();
+                } else {
+                    letterButton.classList.add('bg-red-200');
+                    wrongGuesses++;
+                    updateHangman();
+                }
+                
+                checkGameStatus();
+            }
+
+            function renderWord() {
+                const wordHTML = selectedWord.split('').map(letter => {
+                    const displayLetter = guessedLetters.includes(letter) ? letter : '';
+                    return `<div class="w-10 h-12 ${displayLetter ? 'bg-white border-b-4 border-gray-800' : 'bg-gray-200'} rounded flex items-center justify-center text-2xl font-bold">${displayLetter}</div>`;
+                }).join('');
+                wordDisplay.innerHTML = wordHTML;
+            }
+
+            function updateHangman() {
+                hangmanParts.forEach((partId, index) => {
+                    const part = document.getElementById(partId);
+                    part.style.opacity = index < wrongGuesses ? '1' : '0';
+                });
+            }
+            
+            function checkGameStatus() {
+                const allLettersGuessed = selectedWord.split('').every(letter => guessedLetters.includes(letter));
+
+                if (allLettersGuessed) {
+                    modalTitle.textContent = '¡Ganaste!';
+                    modalTitle.classList.remove('text-red-600');
+                    modalTitle.classList.add('text-green-600');
+                    correctWordDisplay.textContent = selectedWord;
+                    resultModal.classList.remove('hidden');
+                } else if (wrongGuesses >= MAX_WRONG_GUESSES) {
+                    modalTitle.textContent = '¡Perdiste!';
+                    modalTitle.classList.remove('text-green-600');
+                    modalTitle.classList.add('text-red-600');
+                    correctWordDisplay.textContent = selectedWord;
+                    resultModal.classList.remove('hidden');
+                }
+            }
+
+            playAgainButton.addEventListener('click', startGame);
+
+            startGame();
+        });
+    </script>
+</body>
+</html>

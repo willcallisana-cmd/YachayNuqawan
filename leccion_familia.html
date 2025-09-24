@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lección 2: La Familia - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .progress-bar-fill { transition: width 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+    <!-- Header de la Lección -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between">
+                <a href="lecciones_basico.html" class="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+                <h1 class="text-lg font-bold text-gray-800">Lección 2: La Familia</h1>
+                <div class="w-6"></div>
+            </div>
+            <div class="mt-2 w-full bg-gray-200 rounded-full h-2.5">
+                <div id="progressBar" class="bg-teal-500 h-2.5 rounded-full progress-bar-fill" style="width: 0%"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal de la Lección -->
+    <main class="flex-grow flex items-center justify-center py-8">
+        <div id="lessonContainer" class="max-w-md w-full mx-4">
+            <!-- Carga dinámica de tarjetas -->
+        </div>
+    </main>
+
+    <!-- Footer de Navegación -->
+    <footer class="bg-white border-t border-gray-200 py-4">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+            <button id="prevButton" class="bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>Anterior</button>
+            <button id="nextButton" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition-colors">Siguiente</button>
+        </div>
+    </footer>
+
+    <script>
+        const lessonId = 'lesson-2';
+        let lessonScore = 0;
+        const lessonData = [
+            {
+                type: 'introduction',
+                title: 'Ayllu: La Familia',
+                text: 'La familia o "ayllu" es el núcleo de la sociedad andina. Aprender a nombrar a sus miembros es un paso fundamental para comunicarte.'
+            },
+            { type: 'presentation', title: 'Mamá', image: 'imagenes/lecciones/basico/madre.png', quechua: 'Mama', spanish: 'Madre' },
+            { type: 'presentation', title: 'Papá', image: 'imagenes/lecciones/basico/padre.png', quechua: 'Tayta', spanish: 'Padre' },
+            {
+                type: 'dialogue',
+                title: 'Presentando a los padres',
+                dialogue: [
+                    { speaker: 'Sipas', text: 'Payqa mamaymi.', spanish: 'Ella es mi mamá.'},
+                    { speaker: 'Wayna', text: 'Paytaqmi taytay.', spanish: 'Y él es mi papá.'}
+                ]
+            },
+            {
+                type: 'multiple-choice',
+                question: '¿Cómo se dice "Padre" en quechua?',
+                options: ['Mama', 'Wawqi', 'Tayta', 'Churi'],
+                correct: 'Tayta'
+            },
+            { type: 'presentation', title: 'Hermano (de un hombre)', image: 'imagenes/lecciones/basico/hermanos.png', quechua: 'Wayqi', spanish: 'Hermano (dicho por un hombre)' },
+            { type: 'presentation', title: 'Hermana (de un hombre)', image: 'imagenes/lecciones/basico/hermanos.png', quechua: 'Pana', spanish: 'Hermana (dicho por un hombre)' },
+            {
+                 type: 'introduction',
+                title: 'Un dato importante',
+                text: 'En quechua, la palabra para "hermano/a" cambia dependiendo de si habla un hombre o una mujer. ¡Es una característica muy interesante del idioma!'
+            },
+            { type: 'presentation', title: 'Hermano (de una mujer)', image: 'imagenes/lecciones/basico/hermanos.png', quechua: 'Tura', spanish: 'Hermano (dicho por una mujer)' },
+            { type: 'presentation', title: 'Hermana (de una mujer)', image: 'imagenes/lecciones/basico/hermanos.png', quechua: 'Ñaña', spanish: 'Hermana (dicho por una mujer)' },
+            {
+                type: 'dialogue',
+                title: 'Presentando a los hermanos',
+                dialogue: [
+                    { speaker: 'Wayna', text: 'Payqa wayqiy.', spanish: 'Él es mi hermano.' },
+                    { speaker: 'Sipas', text: 'Paytaqmi turay.', spanish: 'Y él es mi hermano.' }
+                ]
+            },
+            {
+                type: 'dialogue',
+                title: 'Presentando a las hermanas',
+                dialogue: [
+                    { speaker: 'Wayna', text: 'Payqa panaymi.', spanish: 'Ella es mi hermana.' },
+                    { speaker: 'Sipas', text: 'Paytaqmi ñay.', spanish: 'Y ella es mi hermana.' }
+                ]
+            },
+            {
+                type: 'fill-in-the-blank',
+                question: 'Un hombre le dice a su amigo: "Ella es mi hermana". Él diría: "Payqa ____".',
+                correct: 'panaymi'
+            },
+            {
+                type: 'final',
+                title: '¡Allin llamk\'asqa!',
+                text: '¡Buen trabajo! Ahora conoces los términos básicos para hablar de la familia. Este es un gran paso para conversaciones más profundas.'
+            }
+        ];
+
+        let currentCardIndex = 0;
+        const lessonContainer = document.getElementById('lessonContainer');
+        const progressBar = document.getElementById('progressBar');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+        function createIntroductionCard(card) { return `<div class="bg-white rounded-xl shadow-lg p-6 animate-fade-in"><h2 class="text-xl font-bold text-gray-900 text-center mb-4">${card.title}</h2><p class="text-gray-700 text-center leading-relaxed">${card.text}</p></div>`; }
+        function createPresentationCard(card) { return `<div class="bg-white rounded-xl shadow-lg overflow-hidden animate-fade-in"><img class="w-full h-48 object-cover" src="${card.image}" alt=""><div class="p-6"><p class="text-sm font-semibold text-teal-600">${card.title}</p><div class="mt-4"><p class="text-3xl font-bold text-gray-900">${card.quechua}</p><p class="text-gray-600 text-lg">${card.spanish}</p></div></div></div>`; }
+        function createDialogueCard(card) { let dialogueHtml = card.dialogue.map((line, index) => `<div class="chat-bubble ${index % 2 === 0 ? 'bg-teal-100 text-teal-800 self-start' : 'bg-gray-200 text-gray-800 self-end'}" style="animation-delay: ${index * 0.3}s;"><div><span class="font-bold">${line.speaker}:</span> ${line.text}</div><div class="text-sm italic opacity-75 mt-1">${line.spanish}</div></div>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-6 animate-fade-in"><h2 class="text-lg font-semibold text-gray-800 mb-4 text-center">${card.title}</h2><div class="flex flex-col space-y-3">${dialogueHtml}</div></div>`; }
+        function createMultipleChoiceCard(card) { let optionsHtml = card.options.map(option => `<button class="option-btn w-full text-left p-4 border rounded-lg hover:bg-gray-100 transition-colors">${option}</button>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-6 animate-fade-in"><p class="text-lg font-semibold text-gray-800">${card.question}</p><div class="mt-4 space-y-3">${optionsHtml}</div></div>`; }
+        function createFillInTheBlankCard(card) { return `<div class="bg-white rounded-xl shadow-lg p-6 animate-fade-in"><p class="text-lg font-semibold text-gray-800">${card.question}</p><div class="mt-4"><input id="fill-in-blank-input" type="text" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500" placeholder="Escribe aquí..."><button id="check-fill-btn" class="mt-4 w-full bg-teal-600 text-white font-bold py-3 rounded-lg hover:bg-teal-700 transition-colors">Verificar</button></div></div>`; }
+        function createFinalCard(card) { return `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><div class="flex justify-center mb-4"><svg class="h-16 w-16 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.062c.313.045.62.12.916.216a.75.75 0 01.625.862l-.248 1.002a.75.75 0 01-1.336.331l-.053-.212A3.003 3.003 0 0010 4.5V4a.75.75 0 01-.75-.75.75.75 0 01.75-.75zM3.83 5.43a.75.75 0 01.275.698l.064.321a.75.75 0 01-1.4.28l-.064-.32a.75.75 0 01.275-.698a7.502 7.502 0 011.084-.676.75.75 0 01.78.888l-.242.968a.75.75 0 01-1.4-.35l-.032-.128a5.996 5.996 0 00-.706.51A.75.75 0 013.83 5.43zM16.17 5.43a.75.75 0 01.849.52l.032.128a5.996 5.996 0 00.706-.51.75.75 0 11.849-.52zm-12 4.14a.75.75 0 01.698-.275l.321.064a.75.75 0 01.28 1.4l-.32-.064a.75.75 0 01-.698-.275 7.502 7.502 0 01-.676-1.084.75.75 0 01.888-.78l.968.242a.75.75 0 01-.35 1.4zM15.42 10.5a.75.75 0 01.698.275l.321-.064a.75.75 0 11.28-1.4l-.32.064a.75.75 0 01-.698.275c.163.361.309.73.438 1.107l.242-.968a.75.75 0 011.4.35l-.242.968a.75.75 0 01-.888.78 7.502 7.502 0 01-1.084.676zm-1.87-3.66a.75.75 0 01.331 1.336l-.212.053a.75.75 0 01-.331-1.336l.212-.053a3.003 3.003 0 00-1.298-.26V10a.75.75 0 11-1.5 0V8.01a3.003 3.003 0 00-1.298.26l.212.053a.75.75 0 11-.331 1.336l-.212-.053a3.003 3.003 0 00-.26 1.298H8a.75.75 0 110 1.5h.01a3.003 3.003 0 00.26 1.298l-.053.212a.75.75 0 11-1.336.331l.053-.212A3.003 3.003 0 005.5 12H4a.75.75 0 110-1.5h1.99a3.003 3.003 0 00-.26-1.298l.053-.212a.75.75 0 111.336-.331l-.053.212a3.003 3.003 0 001.298.26V8a.75.75 0 111.5 0v1.99c.43.061.848.196 1.24.394a.75.75 0 01.35 1.4l-.968.242c-.361-.163-.73-.309-1.107-.438a.75.75 0 11-.52-1.4z" clip-rule="evenodd" /></svg></div><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-2 text-gray-600">${card.text}</p><a href="lecciones_basico.html" class="mt-6 inline-block bg-teal-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors">Volver a Lecciones</a></div>`; }
+        function setupMultipleChoice(card) { nextButton.disabled = true; const optionButtons = lessonContainer.querySelectorAll('.option-btn'); optionButtons.forEach(button => { button.addEventListener('click', () => { optionButtons.forEach(btn => { btn.disabled = true; if (btn.textContent === card.correct) { btn.classList.add('bg-green-200', 'border-green-500'); } }); if (button.textContent !== card.correct) { button.classList.remove('hover:bg-gray-100'); button.classList.add('bg-red-200', 'border-red-500'); } else { lessonScore += 10; } nextButton.disabled = false; }); }); }
+        function setupFillInTheBlank(card) { nextButton.disabled = true; const input = document.getElementById('fill-in-blank-input'); const checkBtn = document.getElementById('check-fill-btn'); checkBtn.addEventListener('click', () => { const userAnswer = input.value.trim().toLowerCase(); const correctAnswer = card.correct.trim().toLowerCase(); input.disabled = true; checkBtn.disabled = true; if (userAnswer === correctAnswer) { input.classList.add('bg-green-200', 'border-green-500'); lessonScore += 10; } else { input.classList.add('bg-red-200', 'border-red-500'); const correctAnswerDiv = document.createElement('p'); correctAnswerDiv.className = 'mt-2 text-green-700'; correctAnswerDiv.textContent = `Respuesta correcta: ${card.correct}`; checkBtn.insertAdjacentElement('afterend', correctAnswerDiv); } nextButton.disabled = false; }); }
+        function loadCard(index) { const card = lessonData[index]; switch (card.type) { case 'introduction': lessonContainer.innerHTML = createIntroductionCard(card); nextButton.disabled = false; break; case 'presentation': lessonContainer.innerHTML = createPresentationCard(card); nextButton.disabled = false; break; case 'dialogue': lessonContainer.innerHTML = createDialogueCard(card); nextButton.disabled = false; break; case 'multiple-choice': lessonContainer.innerHTML = createMultipleChoiceCard(card); setupMultipleChoice(card); break; case 'fill-in-the-blank': lessonContainer.innerHTML = createFillInTheBlankCard(card); setupFillInTheBlank(card); break; case 'final': lessonContainer.innerHTML = createFinalCard(card); nextButton.textContent = "Finalizar"; nextButton.disabled = false; break; } updateProgressBar(); updateNavButtons(); }
+        function updateProgressBar() { const progress = ((currentCardIndex + 1) / lessonData.length) * 100; progressBar.style.width = `${progress}%`; }
+        function updateNavButtons() { prevButton.disabled = currentCardIndex === 0; if (lessonData[currentCardIndex].type === 'final') { nextButton.style.display = 'block'; } else { nextButton.style.display = 'inline-flex'; } }
+        nextButton.addEventListener('click', () => { if (currentCardIndex < lessonData.length - 1) { currentCardIndex++; loadCard(currentCardIndex); } else { lessonScore += 50; let userProgress = JSON.parse(localStorage.getItem('yachayUserProgress')) || { score: 0 }; userProgress.score += lessonScore; localStorage.setItem('yachayUserProgress', JSON.stringify(userProgress)); let completedLessons = JSON.parse(localStorage.getItem('yachayCompletedLessons')) || []; if (!completedLessons.includes(lessonId)) { completedLessons.push(lessonId); localStorage.setItem('yachayCompletedLessons', JSON.stringify(completedLessons)); } window.location.href = 'lecciones_basico.html'; } });
+        prevButton.addEventListener('click', () => { if (currentCardIndex > 0) { currentCardIndex--; loadCard(currentCardIndex); } });
+        loadCard(currentCardIndex);
+        const style = document.createElement('style'); style.innerHTML = `@keyframes fade-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } } .animate-fade-in { animation: fade-in 0.5s ease-out forwards; } @keyframes bubble-pop-in { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } } .chat-bubble { padding: 10px 15px; border-radius: 20px; max-width: 80%; opacity: 0; animation: bubble-pop-in 0.5s ease-out forwards; }`; document.head.appendChild(style);
+    </script>
+</body>
+</html>

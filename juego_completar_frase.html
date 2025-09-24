@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego: Completa la Frase - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .option-btn {
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .correct {
+            background-color: #A7F3D0; /* Green-200 */
+            border-color: #10B981; /* Green-500 */
+        }
+        .incorrect {
+            background-color: #FECACA; /* Red-200 */
+            border-color: #EF4444; /* Red-500 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="juegos.html" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                <span class="font-medium">Volver a Juegos</span>
+            </a>
+            <h1 class="text-xl font-bold text-gray-800">Completa la Frase</h1>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            
+            <div id="game-container" class="bg-white rounded-lg shadow-xl p-8">
+                <div class="mb-6">
+                    <p class="text-lg text-gray-600">Completa la siguiente oración en quechua:</p>
+                    <div class="mt-4 bg-gray-50 p-4 rounded-lg">
+                        <p id="sentence-display" class="text-2xl font-semibold text-gray-800 h-16 flex items-center justify-center"></p>
+                    </div>
+                    <p id="translation-display" class="mt-2 text-gray-500 italic"></p>
+                </div>
+
+                <div id="options-container" class="grid grid-cols-2 gap-4">
+                    <!-- Opciones se generan aquí -->
+                </div>
+
+                <div id="feedback-container" class="mt-6 h-10">
+                    <!-- Mensaje de feedback -->
+                </div>
+
+                <div class="mt-6">
+                    <button id="next-button" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700 transition-colors w-full hidden">
+                        Siguiente
+                    </button>
+                </div>
+            </div>
+             <div class="mt-6 text-xl font-medium">
+                <span>Puntaje: </span>
+                <span id="score-display" class="font-bold text-teal-600">0</span>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sentences = [
+                {
+                    sentence: "Noqa ___ sutiy.",
+                    translation: "Yo me llamo ___.",
+                    blankWord: "Juan",
+                    options: ["Tayta", "Juan", "Wasi", "Yaku"]
+                },
+                {
+                    sentence: "Payqa ___ mikhun.",
+                    translation: "Él/Ella come ___.",
+                    blankWord: "t'antata",
+                    options: ["alkota", "t'antata", "yakuta", "misita"]
+                },
+                {
+                    sentence: "___ wasi hatun.",
+                    translation: "La ___ es grande.",
+                    blankWord: "Paypa",
+                    options: ["Noqap", "Qampa", "Paypa", "Huk"]
+                },
+                 {
+                    sentence: "Alqoyqa ___ pukllashan.",
+                    translation: "Mi perro está jugando ___.",
+                    blankWord: "kunan",
+                    options: ["q'aya", "kunan", "qayna", "punchaw"]
+                },
+                {
+                    sentence: "Noqanchik ___ llaqtapi tiyanchik.",
+                    translation: "Nosotros vivimos en la ciudad de ___.",
+                    blankWord: "Qosqo",
+                    options: ["Lima", "Puno", "Qosqo", "Arequipa"]
+                }
+            ];
+
+            const sentenceDisplay = document.getElementById('sentence-display');
+            const translationDisplay = document.getElementById('translation-display');
+            const optionsContainer = document.getElementById('options-container');
+            const feedbackContainer = document.getElementById('feedback-container');
+            const nextButton = document.getElementById('next-button');
+            const scoreDisplay = document.getElementById('score-display');
+
+            let currentSentenceIndex = 0;
+            let score = 0;
+
+            function loadSentence(index) {
+                const current = sentences[index];
+                const sentenceText = current.sentence.replace('___', '<span class="text-gray-400">___</span>');
+                sentenceDisplay.innerHTML = sentenceText;
+                translationDisplay.textContent = `Traducción: "${current.translation.replace('___', '...')}"`;
+                
+                optionsContainer.innerHTML = '';
+                feedbackContainer.innerHTML = '';
+                nextButton.classList.add('hidden');
+
+                const shuffledOptions = [...current.options].sort(() => Math.random() - 0.5);
+
+                shuffledOptions.forEach(option => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('option-btn', 'p-4', 'bg-white', 'rounded-lg', 'shadow', 'font-medium', 'text-lg', 'border-2', 'border-gray-200', 'hover:bg-gray-100');
+                    button.addEventListener('click', () => checkAnswer(option, current.blankWord));
+                    optionsContainer.appendChild(button);
+                });
+            }
+
+            function checkAnswer(selectedOption, correctOption) {
+                const buttons = optionsContainer.querySelectorAll('button');
+                buttons.forEach(button => {
+                    button.disabled = true;
+                    if (button.textContent === correctOption) {
+                        button.classList.add('correct');
+                    }
+                });
+
+                if (selectedOption === correctOption) {
+                    feedbackContainer.innerHTML = '<p class="text-green-600 font-semibold text-lg">¡Allin! ¡Respuesta correcta!</p>';
+                    score += 10;
+                    scoreDisplay.textContent = score;
+                    const filledSentence = sentences[currentSentenceIndex].sentence.replace('___', `<span class="text-teal-600 font-bold">${correctOption}</span>`);
+                    sentenceDisplay.innerHTML = filledSentence;
+                } else {
+                    const selectedButton = Array.from(buttons).find(b => b.textContent === selectedOption);
+                    selectedButton.classList.add('incorrect');
+                    feedbackContainer.innerHTML = `<p class="text-red-600 font-semibold text-lg">¡Uhmm! La respuesta correcta es "${correctOption}".</p>`;
+                }
+                
+                nextButton.classList.remove('hidden');
+
+                if (currentSentenceIndex === sentences.length - 1) {
+                    nextButton.textContent = 'Finalizar Juego';
+                }
+            }
+            
+            function handleNext() {
+                currentSentenceIndex++;
+                if (currentSentenceIndex < sentences.length) {
+                    loadSentence(currentSentenceIndex);
+                } else {
+                    showFinalScreen();
+                }
+            }
+
+            function showFinalScreen() {
+                 const gameContainer = document.getElementById('game-container');
+                 gameContainer.innerHTML = `
+                    <h2 class="text-3xl font-bold text-gray-900">¡Juego Terminado!</h2>
+                    <p class="mt-4 text-lg text-gray-600">Tu puntaje final es:</p>
+                    <p class="text-6xl font-bold text-teal-600 my-4">${score}</p>
+                    <button id="play-again-btn" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700 transition-colors">
+                        Jugar de Nuevo
+                    </button>
+                 `;
+                 document.getElementById('play-again-btn').addEventListener('click', () => {
+                     // Recarga la página para reiniciar el juego fácilmente
+                     window.location.reload();
+                 });
+            }
+
+            nextButton.addEventListener('click', handleNext);
+
+            loadSentence(currentSentenceIndex);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lección 21: Narrativa - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .option-btn.correct { background-color: #A7F3D0; border-color: #10B981; }
+        .option-btn.incorrect { background-color: #FECACA; border-color: #EF4444; }
+        .feedback-enter { animation: fadeIn 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between">
+                <a href="lecciones_avanzado.html" class="text-gray-500 hover:text-gray-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </a>
+                <div class="w-full bg-gray-200 rounded-full h-2.5 mx-4">
+                    <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+                 <a href="progreso.html" class="text-gray-500 hover:text-gray-800">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 18.75h-9a9.75 9.75 0 011.316-5.342 9.75 9.75 0 0113.634 1.316 9.75 9.75 0 01-5.342 13.634 9.75 9.75 0 01-1.316 5.342zM16.5 18.75a9.75 9.75 0 005.342-13.634m0 13.634a9.75 9.75 0 01-13.634-5.342m5.342 13.634a9.75 9.75 0 01-5.342-1.316M3.75 5.25a9.75 9.75 0 015.342-1.316m-5.342 1.316a9.75 9.75 0 011.316 5.342m-1.316-5.342a9.75 9.75 0 0113.634 5.342" /></svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="lesson-container">
+                <!-- El contenido de la lección se cargará aquí -->
+            </div>
+            <div class="mt-8 flex justify-between">
+                <button id="prev-button" class="bg-gray-300 text-gray-700 font-bold py-2 px-6 rounded-lg hover:bg-gray-400 transition-colors disabled:opacity-50" disabled>Anterior</button>
+                <button id="next-button" class="bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition-colors">Siguiente</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lessonId = "lesson-21";
+            let lessonScore = 0;
+            let currentCardIndex = 0;
+
+            const baseLessonData = [
+                 {
+                    type: 'introduction',
+                    title: 'Hawariy: El Arte de Contar Historias',
+                    text: 'La tradición oral es el pilar de la cultura andina. A través de los "hawariy" (cuentos o fábulas), la sabiduría, la historia y los valores se han transmitido de generación en generación. ¡Vamos a explorar este mundo!',
+                    image: 'imagenes/lecciones/avanzado/leccion_21/imagen_1.jpg'
+                },
+                {
+                    type: 'presentation',
+                    quechua: 'Hawariy / Willakuy',
+                    spanish: 'Cuento, Fábula / Relato, Historia',
+                    image: 'imagenes/lecciones/avanzado/leccion_21/imagen_2.jpg',
+                    explanation: 'Ambas palabras se refieren a historias. <span class="font-bold text-teal-600">Hawariy</span> suele ser una fábula, mientras que <span class="font-bold text-teal-600">willakuy</span> es un relato o noticia.'
+                },
+                 {
+                    type: 'presentation',
+                    quechua: 'Ñawpa pacha',
+                    spanish: 'Tiempos antiguos',
+                    image: 'imagenes/lecciones/avanzado/leccion_21/imagen_3.jpg',
+                    explanation: 'Muchas historias comienzan con esta frase, que nos transporta a una época lejana y mítica.'
+                },
+                 {
+                    type: 'immersion_text',
+                    title: 'Fragmento: Atuqmantawan Kunturmantawan',
+                    quechua_text: "Huk p'unchawsi, atuqqa kunturwan tuparqan. Atuqqa ninsi: \"Kuntur, apakuway hanaq pachata\", nispa. Kunturqa manan munanchu, ichaqa atuqqa anchatapuni mañakun.",
+                    spanish_text: "Se dice que un día, el zorro se encontró con el cóndor. El zorro le dijo: \"Cóndor, llévame al cielo\", diciendo. El cóndor no quiere, pero el zorro le ruega muchísimo."
+                },
+                 {
+                    type: 'linguistic_analysis',
+                    title: 'Analizando el Quechua: El sufijo -si',
+                    text: 'En el texto, lees "Huk p\'unchaw<strong>si</strong>". Este sufijo es clave en la narrativa. Se llama "reportativo" y se usa para contar algo que no viste directamente, como un cuento, un rumor o un mito. Es la marca de los grandes narradores de historias.',
+                    example_quechua: 'Pay hamun.',
+                    example_spanish: 'Él/ella viene. (Lo viste)',
+                    example_quechua_2: 'Pay hamun<strong>si</strong>.',
+                    example_spanish_2: 'Se dice que él/ella viene. (Te lo contaron)',
+                },
+            ];
+
+            const questionBank = [
+                { type: 'multiple-choice', question: '¿Imatan "hawariy" ninayan?', options: ['Musica', 'Cuento o fábula', 'Comida'], correct: 'Cuento o fábula', feedback: { correct: '¡Kusa! <strong>Hawariy</strong> es una historia, a menudo con una enseñanza.', incorrect: 'Casi. La respuesta correcta es <strong>Cuento o fábula</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Huk p\'unchaw', post_text: ', atuqqa...', correct: 'si', feedback: { correct: '¡Allin ruwasqa! El sufijo <strong>-si</strong> indica que es un relato contado.', incorrect: 'La respuesta correcta es <strong>si</strong>, el sufijo reportativo.' } },
+                { type: 'multiple-choice', question: 'Textoq nisqanmanhina, ¿pin kunturwan tuparqan?', options: ['Ukuku', 'Alqo', 'Atuq'], correct: 'Atuq', feedback: { correct: '¡Excelente! El texto dice claramente que el zorro (atuq) se encontró con el cóndor.', incorrect: 'Lee el texto de nuevo. La respuesta correcta es <strong>Atuq</strong> (zorro).' } },
+                { type: 'fill-in-the-blank', pre_text: 'Atuqqa', post_text: ' pachatan riyda munan. (El zorro quiere ir al cielo)', correct: 'hanaq', feedback: { correct: '¡Perfecto! <strong>Hanaq pacha</strong> es el mundo de arriba o cielo.', incorrect: 'La respuesta correcta es <strong>hanaq</strong>.' } },
+                { type: 'multiple-choice', question: 'El sufijo "-si" se usa para contar algo que...', options: ['Viste tú mismo', 'Pasará mañana', 'Te contaron'], correct: 'Te contaron', feedback: { correct: '¡Muy bien! El sufijo <strong>-si</strong> es para información reportada, no presenciada.', incorrect: 'No es correcto. El sufijo <strong>-si</strong> se usa para algo que te contaron.' } },
+                { type: 'fill-in-the-blank', pre_text: '¿Imatan "ñawpa pacha" ninayan?', post_text: ' (Tiempos antiguos)', correct: 'Ñawpa pacha', feedback: { correct: '¡Correcto! Es una frase clave para empezar historias.', incorrect: 'La respuesta correcta es <strong>Ñawpa pacha</strong>.' } },
+                { type: 'multiple-choice', question: '¿Imatan atuqqa kunturta mañakun?', options: ['Mikhunata', 'Hanaq pachata apakuwayta', 'Wasinta riyta'], correct: 'Hanaq pachata apakuwayta', feedback: { correct: '¡Fantástico! El zorro le pide que lo lleve al cielo.', incorrect: 'La respuesta correcta es <strong>Hanaq pachata apakuwayta</strong> (que lo lleve al cielo).' } },
+                { type: 'fill-in-the-blank', pre_text: 'Kunturqa manan', post_text: 'chu. (El cóndor no quiere)', correct: 'munan', feedback: { correct: '¡Muy bien! Usaste el verbo <strong>munay</strong> en negativo.', incorrect: 'La respuesta correcta es <strong>munan</strong>.' } },
+                { type: 'multiple-choice', question: '"Willakuy" puede significar...', options: ['Solo fábula', 'Relato o noticia', 'Solo canción'], correct: 'Relato o noticia', feedback: { correct: '¡Exacto! <strong>Willakuy</strong> es un término más general para una historia o un informe.', incorrect: 'No. Significa <strong>Relato o noticia</strong>.' } },
+                { type: 'fill-in-the-blank', pre_text: 'Pay hamun', post_text: '. (Se dice que él viene)', correct: 'si', feedback: { correct: '¡Perfecto! Demuestras que entendiste el uso del sufijo reportativo.', incorrect: 'Para indicar que es algo que te contaron, se usa el sufijo <strong>-si</strong>.' } }
+            ];
+            
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+
+            shuffleArray(questionBank);
+            const selectedQuestions = questionBank.slice(0, 4);
+
+            const finalCard = {
+                type: 'final',
+                title: '¡Lección 21 Completada!',
+                text: '¡Felicitaciones! Has dado tu primer paso en el mundo de la narrativa quechua. Ahora entiendes cómo se transmiten las historias y conoces el sufijo de los narradores: -si.'
+            };
+            
+            const lessonData = [...baseLessonData, ...selectedQuestions, finalCard];
+
+            const lessonContainer = document.getElementById('lesson-container');
+            const prevButton = document.getElementById('prev-button');
+            const nextButton = document.getElementById('next-button');
+            const progressBar = document.getElementById('progress-bar');
+            
+            const createIntroductionCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><img src="${card.image}" class="w-full aspect-square object-cover rounded-lg mb-6" alt="${card.title}"><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-4 text-gray-600">${card.text}</p></div>`;
+            const createPresentationCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><img src="${card.image}" class="w-full aspect-square object-cover rounded-lg mb-6" alt="${card.quechua}"><div class="text-center"><p class="text-3xl font-bold text-teal-600">${card.quechua}</p><p class="text-xl text-gray-700 font-medium">${card.spanish}</p></div><p class="mt-6 text-center text-gray-600">${card.explanation}</p></div>`;
+            const createImmersionTextCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><h3 class="text-xl font-bold text-center mb-4">${card.title}</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-4 bg-gray-50 rounded-lg"><p class="font-bold text-gray-800 mb-2">Quechua</p><p class="text-gray-700">${card.quechua_text}</p></div><div class="p-4 bg-gray-50 rounded-lg"><p class="font-bold text-gray-800 mb-2">Español</p><p class="text-gray-700">${card.spanish_text}</p></div></div></div>`;
+            const createLinguisticAnalysisCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><h3 class="text-xl font-bold text-center mb-4">${card.title}</h3><p class="text-gray-600 text-center mb-6">${card.text}</p><div class="space-y-4"><div class="p-3 bg-teal-50 rounded-lg"><p><span class="font-mono text-teal-700">${card.example_quechua}</span> &rarr; <span class="text-gray-600">${card.example_spanish}</span></p></div><div class="p-3 bg-teal-50 rounded-lg"><p><span class="font-mono text-teal-700">${card.example_quechua_2}</span> &rarr; <span class="text-gray-600">${card.example_spanish_2}</span></p></div></div></div>`;
+            const createMultipleChoiceCard = (card) => { let optionsHtml = card.options.map(opt => `<button class="option-btn w-full text-left p-4 border-2 rounded-lg hover:bg-gray-100 transition-colors">${opt}</button>`).join(''); return `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><p class="text-lg font-medium text-gray-800 mb-4">${card.question}</p><div class="space-y-3">${optionsHtml}</div><div id="feedback-container" class="mt-4 text-center"></div></div>`; };
+            const createFillInTheBlankCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 animate-fade-in"><p class="text-lg font-medium text-center text-gray-800 mb-4">${card.post_text}</p><div class="flex items-center justify-center space-x-2"><span class="text-2xl font-bold">${card.pre_text}</span><input id="fill-input" type="text" class="w-20 text-2xl font-bold border-b-2 border-gray-400 focus:border-teal-500 outline-none text-center" maxlength="15"><button id="check-fill-btn" class="bg-teal-600 text-white font-bold py-2 px-4 rounded-lg">Revisar</button></div><div id="feedback-container" class="mt-4 text-center"></div></div>`;
+            const createFinalCard = (card) => `<div class="bg-white rounded-xl shadow-lg p-8 text-center animate-fade-in"><div class="flex justify-center mb-4"><svg class="h-16 w-16 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg></div><h2 class="text-2xl font-bold text-gray-900">${card.title}</h2><p class="mt-2 text-gray-600">${card.text}</p><a href="lecciones_avanzado.html" class="mt-6 inline-block bg-teal-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-700 transition-colors">Volver a Lecciones</a></div>`;
+            
+            function setupMultipleChoice(card) { 
+                nextButton.disabled = true; 
+                const optionButtons = lessonContainer.querySelectorAll('.option-btn'); 
+                const feedbackContainer = lessonContainer.querySelector('#feedback-container');
+                optionButtons.forEach(button => { 
+                    button.addEventListener('click', () => { 
+                        optionButtons.forEach(btn => { 
+                            btn.disabled = true; 
+                            if (btn.textContent === card.correct) { btn.classList.add('correct'); } 
+                        }); 
+                        if (button.textContent !== card.correct) { 
+                            button.classList.add('incorrect'); 
+                            feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-red-600 font-medium">¡Uchay!</p><p class="text-gray-600 text-sm">${card.feedback.incorrect}</p></div>`;
+                        } else { 
+                            lessonScore += 10; 
+                            feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-green-600 font-medium">¡Kusa!</p><p class="text-gray-600 text-sm">${card.feedback.correct}</p></div>`;
+                        } 
+                        nextButton.disabled = false; 
+                    }); 
+                }); 
+            }
+            
+            function setupFillInTheBlank(card) { 
+                nextButton.disabled = true; 
+                const checkBtn = document.getElementById('check-fill-btn'); 
+                const input = document.getElementById('fill-input');
+                const feedbackContainer = lessonContainer.querySelector('#feedback-container');
+
+                function checkAnswer() {
+                    const isCorrect = input.value.trim().toLowerCase() === card.correct.toLowerCase(); 
+                    input.classList.add(isCorrect ? 'text-green-600' : 'text-red-600'); 
+                    input.disabled = true; 
+                    if(checkBtn) checkBtn.disabled = true; 
+                    if (isCorrect) {
+                        lessonScore += 10; 
+                        feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-green-600 font-medium">¡Allin Ruwasqa!</p><p class="text-gray-600 text-sm">${card.feedback.correct}</p></div>`;
+                    } else {
+                        feedbackContainer.innerHTML = `<div class="feedback-enter"><p class="text-red-600 font-medium">¡Uchay!</p><p class="text-gray-600 text-sm">${card.feedback.incorrect}</p></div>`;
+                    }
+                    nextButton.disabled = false; 
+                }
+
+                if (checkBtn) {
+                     checkBtn.addEventListener('click', checkAnswer);
+                }
+               
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        checkAnswer();
+                    }
+                });
+            }
+
+            function loadCard(index) {
+                const card = lessonData[index];
+                switch (card.type) {
+                    case 'introduction': lessonContainer.innerHTML = createIntroductionCard(card); nextButton.disabled = false; break;
+                    case 'presentation': lessonContainer.innerHTML = createPresentationCard(card); nextButton.disabled = false; break;
+                    case 'immersion_text': lessonContainer.innerHTML = createImmersionTextCard(card); nextButton.disabled = false; break;
+                    case 'linguistic_analysis': lessonContainer.innerHTML = createLinguisticAnalysisCard(card); nextButton.disabled = false; break;
+                    case 'multiple-choice': lessonContainer.innerHTML = createMultipleChoiceCard(card); setupMultipleChoice(card); break;
+                    case 'fill-in-the-blank': lessonContainer.innerHTML = createFillInTheBlankCard(card); setupFillInTheBlank(card); break;
+                    case 'final': lessonContainer.innerHTML = createFinalCard(card); nextButton.textContent = "Finalizar"; nextButton.disabled = false; break;
+                }
+                updateProgressBar();
+                updateNavButtons();
+            }
+
+            function updateProgressBar() { const progress = ((currentCardIndex) / (lessonData.length - 1)) * 100; progressBar.style.width = `${progress}%`; }
+            function updateNavButtons() { prevButton.disabled = currentCardIndex === 0; if (lessonData[currentCardIndex].type === 'final') { nextButton.textContent = "Finalizar"; } else { nextButton.textContent = "Siguiente"; } }
+
+            prevButton.addEventListener('click', () => { if (currentCardIndex > 0) { currentCardIndex--; loadCard(currentCardIndex); } });
+            nextButton.addEventListener('click', () => {
+                if (currentCardIndex < lessonData.length - 1) {
+                    currentCardIndex++;
+                    loadCard(currentCardIndex);
+                } else {
+                    // --- Guardar Progreso --- //
+                    const progressDataString = localStorage.getItem('yachayProgress') || '{}';
+                    const progress = JSON.parse(progressDataString);
+                    
+                    const currentTotalScore = progress.totalScore || 0;
+                    progress.totalScore = currentTotalScore + lessonScore;
+                    
+                    let completed = progress.completedLessons || [];
+                    if (!completed.includes(lessonId)) { 
+                        completed.push(lessonId); 
+                    }
+                    progress.completedLessons = completed;
+
+                    localStorage.setItem('yachayProgress', JSON.stringify(progress));
+                    window.location.href = 'lecciones_avanzado.html';
+                }
+            });
+
+            loadCard(currentCardIndex);
+        });
+    </script>
+</body>
+</html>

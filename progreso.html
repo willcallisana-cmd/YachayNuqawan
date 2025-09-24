@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Progreso - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+             <a href="index.html" class="flex items-center space-x-2">
+                <svg class="h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418" />
+                </svg>
+                <span class="text-2xl font-bold text-gray-800">Yachay</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="py-12 sm:py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900">Tu Aventura en el Quechua</h1>
+                <p class="mt-4 text-lg text-gray-600">Este es un resumen de tu viaje de aprendizaje.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Tarjeta de Puntos -->
+                <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center text-center">
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <svg class="h-8 w-8 text-yellow-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                           <path fill-rule="evenodd" d="M10 2a.75.75 0 01.75.75v.062c.313.045.62.12.916.216a.75.75 0 01.625.862l-.248 1.002a.75.75 0 01-1.336.331l-.053-.212A3.003 3.003 0 0010 4.5V4a.75.75 0 01-.75-.75.75.75 0 01.75-.75zM3.83 5.43a.75.75 0 01.275.698l.064.321a.75.75 0 01-1.4.28l-.064-.32a.75.75 0 01.275-.698a7.502 7.502 0 011.084-.676.75.75 0 01.78.888l-.242.968a.75.75 0 01-1.4-.35l-.032-.128a5.996 5.996 0 00-.706.51A.75.75 0 013.83 5.43zM16.17 5.43a.75.75 0 01.849.52l.032.128a5.996 5.996 0 00.706-.51.75.75 0 11.849-.52zm-12 4.14a.75.75 0 01.698-.275l.321.064a.75.75 0 01.28 1.4l-.32-.064a.75.75 0 01-.698-.275 7.502 7.502 0 01-.676-1.084.75.75 0 01.888-.78l.968.242a.75.75 0 01-.35 1.4zM15.42 10.5a.75.75 0 01.698.275l.321-.064a.75.75 0 11.28-1.4l-.32.064a.75.75 0 01-.698.275c.163.361.309.73.438 1.107l.242-.968a.75.75 0 011.4.35l-.242.968a.75.75 0 01-.888.78 7.502 7.502 0 01-1.084.676zm-1.87-3.66a.75.75 0 01.331 1.336l-.212.053a.75.75 0 01-.331-1.336l.212-.053a3.003 3.003 0 00-1.298-.26V10a.75.75 0 11-1.5 0V8.01a3.003 3.003 0 00-1.298.26l.212.053a.75.75 0 11-.331 1.336l-.212-.053a3.003 3.003 0 00-.26 1.298H8a.75.75 0 110 1.5h.01a3.003 3.003 0 00.26 1.298l-.053.212a.75.75 0 11-1.336.331l.053-.212A3.003 3.003 0 005.5 12H4a.75.75 0 110-1.5h1.99a3.003 3.003 0 00-.26-1.298l.053-.212a.75.75 0 111.336-.331l-.053.212a3.003 3.003 0 001.298.26V8a.75.75 0 111.5 0v1.99c.43.061.848.196 1.24.394a.75.75 0 01.35 1.4l-.968.242c-.361-.163-.73-.309-1.107-.438a.75.75 0 11-.52-1.4z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <p class="mt-4 text-gray-600 text-lg">Puntos Totales (Tinkis)</p>
+                    <p id="totalPoints" class="text-5xl font-bold text-gray-900 mt-2">0</p>
+                </div>
+
+                <!-- Tarjeta de Lecciones Completadas -->
+                <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col items-center justify-center text-center">
+                    <div class="bg-teal-100 p-3 rounded-full">
+                        <svg class="h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <p class="mt-4 text-gray-600 text-lg">Lecciones Completadas</p>
+                    <p id="lessonsCompleted" class="text-5xl font-bold text-gray-900 mt-2">0 / 10</p>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="niveles.html" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700 transition-colors">
+                    Volver a las Lecciones
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar Puntos
+            const userProgress = JSON.parse(localStorage.getItem('yachayUserProgress')) || { score: 0 };
+            document.getElementById('totalPoints').textContent = userProgress.score;
+
+            // Cargar Lecciones Completadas
+            const completedLessons = JSON.parse(localStorage.getItem('yachayCompletedLessons')) || [];
+            document.getElementById('lessonsCompleted').textContent = `${completedLessons.length} / 10`;
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Emparejamiento - Yachay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .card.selected {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 3px #34D399; /* Teal-400 */
+            border-color: #34D399;
+        }
+        .card.matched {
+            transform: scale(1);
+            background-color: #A7F3D0; /* Green-200 */
+            border-color: #10B981; /* Green-500 */
+            color: #047857; /* Green-700 */
+            cursor: default;
+        }
+        .card.mismatched {
+            transform: scale(1);
+            background-color: #FECACA; /* Red-200 */
+            border-color: #EF4444; /* Red-500 */
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <a href="juegos.html" class="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                <span class="font-medium">Volver a Juegos</span>
+            </a>
+            <h1 class="text-xl font-bold text-gray-800">Emparejamiento</h1>
+        </div>
+    </header>
+
+    <main class="py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">Une las Parejas</h2>
+                <p class="mt-2 text-lg text-gray-600">Selecciona una palabra en quechua y luego su traducción en español.</p>
+                 <div class="mt-4 flex justify-center space-x-8 text-xl font-medium">
+                    <div>
+                        <span>Nivel: </span>
+                        <span id="level-display" class="font-bold text-teal-600">1</span>
+                    </div>
+                    <div>
+                        <span>Puntaje: </span>
+                        <span id="score-display" class="font-bold text-teal-600">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="game-board" class="grid grid-cols-2 gap-4 md:grid-cols-4">
+                <!-- Las tarjetas del juego se generarán aquí -->
+            </div>
+
+            <div class="mt-8 text-center">
+                <button id="reset-button" class="bg-teal-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-700 transition-colors">
+                    Reiniciar Juego
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal de Felicitación -->
+    <div id="win-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 text-center max-w-sm mx-auto">
+            <h3 id="modal-title" class="text-2xl font-bold text-gray-900">¡Allin Ruwasqa!</h3>
+            <div id="modal-text" class="mt-4">
+                <p class="mt-2 text-gray-600">(¡Bien hecho!)</p>
+                <p>Has encontrado todas las parejas. ¡Sigue practicando!</p>
+            </div>
+            <button id="play-again-button" class="mt-6 bg-teal-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-teal-700 transition-colors">
+                Jugar de Nuevo
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const levels = {
+                1: [
+                    { quechua: 'Tayta', spanish: 'Papá' },
+                    { quechua: 'Mama', spanish: 'Mamá' },
+                    { quechua: 'Wawa', spanish: 'Bebé / Niño' },
+                    { quechua: 'Inti', spanish: 'Sol' }
+                ],
+                2: [
+                    { quechua: 'Miski', spanish: 'Dulce' },
+                    { quechua: 'T\'anta', spanish: 'Pan' },
+                    { quechua: 'Yaku', spanish: 'Agua' },
+                    { quechua: 'Killa', spanish: 'Luna' },
+                    { quechua: 'Huk', spanish: 'Uno' },
+                    { quechua: 'Iskay', spanish: 'Dos' }
+                ],
+                3: [
+                    { quechua: 'Alqo', spanish: 'Perro' },
+                    { quechua: 'Misi', spanish: 'Gato' },
+                    { quechua: 'Kuntur', spanish: 'Cóndor' },
+                    { quechua: 'Puma', spanish: 'Puma' },
+                    { quechua: 'Llama', spanish: 'Llama' },
+                    { quechua: 'Uwiha', spanish: 'Oveja' }
+                ],
+                4: [
+                    { quechua: 'Puka', spanish: 'Rojo' },
+                    { quechua: 'Q\'omer', spanish: 'Verde' },
+                    { quechua: 'Anqas', spanish: 'Azul' },
+                    { quechua: 'Yuraq', spanish: 'Blanco' },
+                    { quechua: 'Yana', spanish: 'Negro' },
+                    { quechua: 'Q\'ellu', spanish: 'Amarillo' }
+                ],
+                5: [
+                    { quechua: 'Chiri', spanish: 'Frío' },
+                    { quechua: 'Para', spanish: 'Lluvia' },
+                    { quechua: 'Wayra', spanish: 'Viento' },
+                    { quechua: 'Nina', spanish: 'Fuego' },
+                    { quechua: 'Allpa', spanish: 'Tierra' },
+                    { quechua: 'Riti', spanish: 'Nieve' },
+                    { quechua: 'Mayu', spanish: 'Río' },
+                    { quechua: 'Orqo', spanish: 'Cerro' }
+                ]
+            };
+            const MAX_LEVEL = 5;
+
+            const gameBoard = document.getElementById('game-board');
+            const resetButton = document.getElementById('reset-button');
+            const winModal = document.getElementById('win-modal');
+            const playAgainButton = document.getElementById('play-again-button');
+            const scoreDisplay = document.getElementById('score-display');
+            const levelDisplay = document.getElementById('level-display');
+            const modalTitle = document.getElementById('modal-title');
+            const modalText = document.getElementById('modal-text');
+
+            let firstCard = null;
+            let secondCard = null;
+            let lockBoard = false;
+            let pairsFound = 0;
+            let currentLevel = 1;
+            let score = 0;
+            let currentVocabulary = [];
+
+            function shuffle(array) {
+                array.sort(() => Math.random() - 0.5);
+            }
+
+            function createBoard(level) {
+                currentVocabulary = levels[level];
+                gameBoard.innerHTML = '';
+                pairsFound = 0;
+                let cards = [];
+                currentVocabulary.forEach((item, index) => {
+                    cards.push({ lang: 'quechua', text: item.quechua, pairId: index });
+                    cards.push({ lang: 'spanish', text: item.spanish, pairId: index });
+                });
+
+                shuffle(cards);
+
+                if (currentVocabulary.length <= 4) {
+                    gameBoard.className = 'grid grid-cols-2 gap-4 md:grid-cols-4';
+                } else if (currentVocabulary.length <= 6) {
+                    gameBoard.className = 'grid grid-cols-3 gap-4 md:grid-cols-4';
+                } else {
+                    gameBoard.className = 'grid grid-cols-4 gap-4';
+                }
+
+                cards.forEach(cardData => {
+                    const cardElement = document.createElement('div');
+                    cardElement.classList.add('card', 'p-4', 'bg-white', 'rounded-lg', 'shadow', 'text-center', 'font-medium', 'text-lg', 'border-2', 'border-transparent', 'flex', 'items-center', 'justify-center', 'h-24');
+                    cardElement.dataset.pairId = cardData.pairId;
+                    cardElement.textContent = cardData.text;
+                    gameBoard.appendChild(cardElement);
+                });
+            }
+
+            function handleCardClick(e) {
+                if (lockBoard || e.target.classList.contains('matched') || !e.target.classList.contains('card')) return;
+                const clickedCard = e.target;
+                if (clickedCard === firstCard) return;
+                clickedCard.classList.add('selected');
+                if (!firstCard) {
+                    firstCard = clickedCard;
+                    return;
+                }
+                secondCard = clickedCard;
+                checkForMatch();
+            }
+
+            function checkForMatch() {
+                lockBoard = true;
+                const isMatch = firstCard.dataset.pairId === secondCard.dataset.pairId;
+                isMatch ? disableCards() : unflipCards();
+            }
+
+            function disableCards() {
+                firstCard.classList.remove('selected');
+                secondCard.classList.remove('selected');
+                firstCard.classList.add('matched');
+                secondCard.classList.add('matched');
+                
+                score += 10;
+                updateDisplays();
+                pairsFound++;
+                resetBoard();
+                
+                if (pairsFound === currentVocabulary.length) {
+                    setTimeout(showWinModal, 500);
+                }
+            }
+
+            function unflipCards() {
+                firstCard.classList.add('mismatched');
+                secondCard.classList.add('mismatched');
+                
+                score = Math.max(0, score - 2);
+                updateDisplays();
+
+                setTimeout(() => {
+                    firstCard.classList.remove('selected', 'mismatched');
+                    secondCard.classList.remove('selected', 'mismatched');
+                    resetBoard();
+                }, 1000);
+            }
+            
+            function updateDisplays() {
+                scoreDisplay.textContent = score;
+                levelDisplay.textContent = currentLevel;
+            }
+
+            function showWinModal() {
+                if (currentLevel < MAX_LEVEL) {
+                    modalTitle.textContent = `¡Nivel ${currentLevel} Superado!`;
+                    modalText.innerHTML = '<p class="mt-4">¡Excelente! ¿Listo para el siguiente desafío?</p>';
+                    playAgainButton.textContent = 'Siguiente Nivel';
+                } else {
+                    modalTitle.textContent = '¡Tukuy Yachayniyuq!';
+                    modalText.innerHTML = '<p class="mt-2 text-gray-600">(¡Juego Completado!)</p><p class="mt-4">Has dominado todos los niveles. ¡Felicitaciones!</p>';
+                    playAgainButton.textContent = 'Jugar de Nuevo';
+                }
+                winModal.classList.remove('hidden');
+            }
+
+            function resetBoard() {
+                [firstCard, secondCard, lockBoard] = [null, null, false];
+            }
+
+            function fullReset() {
+                winModal.classList.add('hidden');
+                currentLevel = 1;
+                score = 0;
+                updateDisplays();
+                resetBoard();
+                createBoard(currentLevel);
+            }
+            
+            function handleModalButtonClick() {
+                winModal.classList.add('hidden');
+                if (currentLevel < MAX_LEVEL) {
+                    currentLevel++;
+                    updateDisplays();
+                    createBoard(currentLevel);
+                } else {
+                    fullReset();
+                }
+            }
+
+            gameBoard.addEventListener('click', handleCardClick);
+            resetButton.addEventListener('click', fullReset);
+            playAgainButton.addEventListener('click', handleModalButtonClick);
+
+            fullReset();
+        });
+    </script>
+</body>
+</html>
